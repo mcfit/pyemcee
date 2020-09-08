@@ -18,10 +18,6 @@ pyemcee
     :target: https://coveralls.io/github/mcfit/pyemcee?branch=master
     :alt: Coverage Status
 
-.. image:: http://mybinder.org/badge.svg
-    :target: http://mybinder.org/repo/mcfit/pyemcee
-    :alt: Binder
-
 .. image:: https://img.shields.io/badge/license-GPL-blue.svg
     :target: https://github.com/mcfit/pyemcee/blob/master/LICENSE
     :alt: GitHub license
