@@ -61,13 +61,13 @@ You need to define your function. For example::
 
 and use the appropriate confidence level and uncertainty distribution. For example, for a 1.645-sigma standard deviation with a uniform distribution::
 
-    clevel=.9; 1.645-sigma
-    use_gaussian=0 ; uniform distribution from min value to max value
+    clevel=.9 # 1.645-sigma
+    use_gaussian=0 # uniform distribution from min value to max value
 
 for a 1-sigma standard deviation with a Gaussian distribution::
 
-    clevel=0.68268949 ; 1.0-sigma
-    use_gaussian=1 ; gaussian distribution from min value to max value
+    clevel=0.68268949 # 1.0-sigma
+    use_gaussian=1 # gaussian distribution from min value to max value
 
 and specify the number of walkers and the number of iterations::
 
@@ -118,21 +118,21 @@ which provide the upper and lower limits on each parameter::
 
 For other standard deviation, you should use different confidence levels::
 
-    clevel=0.38292492 ; 0.5-sigma
-    clevel=0.68268949 ; 1.0-sigma
-    clevel=0.86638560 ; 1.5-sigma
-    clevel=0.90       ; 1.645-sigma
-    clevel=0.95       ; 1.960-sigma
-    clevel=0.95449974 ; 2.0-sigma
-    clevel=0.98758067 ; 2.5-sigma
-    clevel=0.99       ; 2.575-sigma
-    clevel=0.99730020 ; 3.0-sigma
-    clevel=0.99953474 ; 3.5-sigma
-    clevel=0.99993666 ; 4.0-sigma
-    clevel=0.99999320 ; 4.5-sigma
-    clevel=0.99999943 ; 5.0-sigma
-    clevel=0.99999996 ; 5.5-sigma
-    clevel=0.999999998; 6.0-sigma
+    clevel=0.38292492 # 0.5-sigma
+    clevel=0.68268949 # 1.0-sigma
+    clevel=0.86638560 # 1.5-sigma
+    clevel=0.90       # 1.645-sigma
+    clevel=0.95       # 1.960-sigma
+    clevel=0.95449974 # 2.0-sigma
+    clevel=0.98758067 # 2.5-sigma
+    clevel=0.99       # 2.575-sigma
+    clevel=0.99730020 # 3.0-sigma
+    clevel=0.99953474 # 3.5-sigma
+    clevel=0.99993666 # 4.0-sigma
+    clevel=0.99999320 # 4.5-sigma
+    clevel=0.99999943 # 5.0-sigma
+    clevel=0.99999996 # 5.5-sigma
+    clevel=0.999999998# 6.0-sigma
 
 Documentation
 =============
