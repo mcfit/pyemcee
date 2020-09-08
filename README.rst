@@ -137,5 +137,5 @@ For other standard deviation, you should use different confidence levels::
 Documentation
 =============
 
-For more information on how to use the API functions from the pyemcee libray, please read the `API Documentation  <https://mcfit.github.io/pyemcee/doc>`_ published on `mcfit.github.io/pyemcee <https://mcfit.github.io/pyemcee>`_.
+For more information on how to use the API functions from the pyemcee library, please read the `API Documentation  <https://mcfit.github.io/pyemcee/doc>`_ published on `mcfit.github.io/pyemcee <https://mcfit.github.io/pyemcee>`_.
 
