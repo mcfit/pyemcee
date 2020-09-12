@@ -2,7 +2,7 @@
 [![PyPI version](https://badge.fury.io/py/pyemcee.svg)](https://badge.fury.io/py/pyemcee)
 [![Build Status](https://travis-ci.org/mcfit/pyemcee.svg?branch=master)](https://travis-ci.org/mcfit/pyemcee)
 [![Coverage Status](https://coveralls.io/repos/github/mcfit/pyemcee/badge.svg?)](https://coveralls.io/github/mcfit/pyemcee?branch=master)
-[![GitHub license](https://img.shields.io/aur/license/yaourt.svg)](https://github.com/mcfit/pyemcee/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-GPL-blue.svg)](https://github.com/mcfit/pyemcee/blob/master/LICENSE)
 
 Python implementation of the affine-invariant MCMC Hammer
 
