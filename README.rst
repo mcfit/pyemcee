@@ -10,7 +10,7 @@ pyemcee
     :target: https://travis-ci.org/mcfit/pyemcee
     :alt: Build Status
 
-.. image:: https://ci.appveyor.com/api/projects/status/b3gw6vgf8s0vu8nv?svg=true
+.. image:: https://ci.appveyor.com/api/projects/status/oqnksaooj338xn4d?svg=true
     :target: https://ci.appveyor.com/project/danehkar/pyemcee
     :alt: Build Status
 
