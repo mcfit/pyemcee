@@ -9,19 +9,23 @@ pyemcee
 .. image:: https://travis-ci.org/mcfit/pyemcee.svg?branch=master
     :target: https://travis-ci.org/mcfit/pyemcee
     :alt: Build Status
-
+    
 .. image:: https://ci.appveyor.com/api/projects/status/oqnksaooj338xn4d?svg=true
     :target: https://ci.appveyor.com/project/danehkar/pyemcee
     :alt: Build Status
-
+    
 .. image:: https://coveralls.io/repos/github/mcfit/pyemcee/badge.svg?
     :target: https://coveralls.io/github/mcfit/pyemcee?branch=master
     :alt: Coverage Status
-
+    
 .. image:: https://img.shields.io/badge/license-GPL-blue.svg
     :target: https://github.com/mcfit/pyemcee/blob/master/LICENSE
     :alt: GitHub license
-
+    
+.. image:: https://anaconda.org/conda-forge/pyemcee/badges/version.svg
+    :target: https://anaconda.org/conda-forge/pyemcee
+    :alt: Anaconda Cloud
+    
 .. image:: https://img.shields.io/badge/python-2.7%2C%203.4%2C%203.5-blue.svg
     :alt: Support Python versions 2.7, 3.4 and 3.5
 
