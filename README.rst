@@ -46,6 +46,11 @@ To install the stable version, you can use the preferred installer program (pip)
 
     $ pip install pyemcee
 
+or you can install it from the cross-platform package manager *conda*:
+
+.. code-block::
+
+    $ conda install -c conda-forge pyemcee
 
 How to Use
 ==========
