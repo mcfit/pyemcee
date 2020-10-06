@@ -22,7 +22,7 @@ pyemcee
     :target: https://github.com/mcfit/pyemcee/blob/master/LICENSE
     :alt: GitHub license
     
-.. image:: https://anaconda.org/conda-forge/pyemcee/badges/version.svg
+.. image:: https://img.shields.io/conda/vn/conda-forge/pyemcee.svg
     :target: https://anaconda.org/conda-forge/pyemcee
     :alt: Anaconda Cloud
     
