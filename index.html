@@ -1,1 +1,161 @@
-My GitHub Page
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>pyemcee - Python implementation of the affine-invariant MCMC Hammer</title>
+    <meta name="description" content="pyemcee - A Python package developed to perform affine-invariant Markov chain Monte Carlo (MCMC) ensemble sampler - maintained by Ashkbiz Danehkar" />
+    <meta name="keywords" content="pyemcee, Python, MCMC, EMCEE, Ashkbiz, Danehkar, Ashkbiz Danehkar" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Ashkbiz Danehkar" />
+    <meta name="google-site-verification" content="SjR3aiGoWoYNdlGWoKdppvVNok1R1ppL1MnQqUIR8pw" />
+    <meta name="msvalidate.01" content="9FBB288F1180F3C2A55231499D2CE4E0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link type="application/rss+xml" rel="sitemap"  href="//mcfit.github.io/pyemcee/sitemap.xml" />
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">pyemcee</h1>
+      <h2 class="project-tagline">pyemcee - IDL/GDL Library for affine-invariant MCMC Hammer</h2>
+      <a href="https://github.com/mcfit/pyemcee" class="btn">View on GitHub</a>
+      <a href="https://github.com/mcfit/pyemcee/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/mcfit/pyemcee/tarball/master" class="btn">Download .tar.gz</a>
+      <a href="doc/" class="btn">Documentation</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="idl-emcee" class="anchor" href="#idl-emcee" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pyemcee</h1>
+
+<p><strong>pyemcee</strong> - IDL/GDL Library for affine-invariant MCMC Hammer</p>
+
+</div>
+<a class="reference external image-reference" href="https://pypi.python.org/pypi/pyemcee/"><img alt="PyPI Version" src="https://img.shields.io/pypi/v/pyemcee.svg?style=flat" /></a>
+<a class="reference external image-reference" href="https://travis-ci.org/mcfit/pyemcee"><img alt="Build Status" src="https://travis-ci.org/mcfit/pyemcee.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://ci.appveyor.com/project/danehkar/pyemcee"><img alt="Build Status" src="https://ci.appveyor.com/api/projects/status/oqnksaooj338xn4d?svg=true" /></a>
+<a class="reference external image-reference" href="https://coveralls.io/github/mcfit/pyemcee?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/mcfit/pyemcee/badge.svg?" /></a>
+<a class="reference external image-reference" href="https://github.com/mcfit/pyemcee/blob/master/LICENSE"><object data="https://img.shields.io/badge/license-GPL-blue.svg" type="image/svg+xml">GitHub license</object></a>
+<a class="reference external image-reference" href="https://anaconda.org/conda-forge/pyemcee"><object data="https://img.shields.io/conda/vn/conda-forge/pyemcee.svg" type="image/svg+xml">Anaconda Cloud</object></a>
+<object data="https://img.shields.io/badge/python-2.7%2C%203.4%2C%203.5-blue.svg" type="image/svg+xml">
+Support Python versions 2.7, 3.4 and 3.5</object>
+
+<div class="section" id="description">
+<h1>Description</h1>
+<p><strong>pyemcee</strong> is a Python implementation of the <em>affine-invariant Markov chain Monte Carlo (MCMC) ensemble sampler</em>, based on <a class="reference external" href="https://github.com/mcfit/sl_emcee">sl_emcee</a> by <a class="reference external" href="http://space.mit.edu/home/mnowak/isis_vs_xspec/">M. A. Nowak</a>, an S-Lang/<a class="reference external" href="http://space.mit.edu/cxc/isis/">ISIS</a> implementation of the MCMC Hammer proposed by <a class="reference external" href="http://dx.doi.org/10.2140/camcos.2010.5.65">Goodman &amp; Weare (2010)</a>, and also implemented in Python (<a class="reference external" href="https://github.com/dfm/emcee">emcee</a>) by <a class="reference external" href="http://adsabs.harvard.edu/abs/2013PASP..125..306F">Foreman-Mackey et al. (2013)</a>.</p>
+</div>
+<div class="section" id="installation">
+<h1>Installation</h1>
+<p>To install the last version, all you should need to do is</p>
+<pre class="code literal-block">
+$ python setup.py install
+</pre>
+<p>To install the stable version, you can use the preferred installer program (pip):</p>
+<pre class="code literal-block">
+$ pip install pyemcee
+</pre>
+<p>or you can install it from the cross-platform package manager <em>conda</em>:</p>
+<pre class="code literal-block">
+$ conda install -c conda-forge pyemcee
+</pre>
+</div>
+<div class="section" id="how-to-use">
+<h1>How to Use</h1>
+<p>The Documentation of the functions provides in detail in the <em>API Documentation</em> (<a class="reference external" href="https://mcfit.github.io/pyemcee/doc">mcfit.github.io/pyemcee/doc</a>). This Python library creates the MCMC sampling  for given upper and lower uncertainties, and propagates uncertainties of parameters into the function</p>
+<p>You need to define your function. For example:</p>
+<pre class="literal-block">
+def myfunc21(input1):
+   result1 = np.sum(input1)
+   result2 = input1[1] ** input1[0]
+   return [result1, result2]
+</pre>
+<p>and use the appropriate confidence level and uncertainty distribution. For example, for a 1.645-sigma standard deviation with a uniform distribution:</p>
+<pre class="literal-block">
+clevel=.9 # 1.645-sigma
+use_gaussian=0 # uniform distribution from min value to max value
+</pre>
+<p>for a 1-sigma standard deviation with a Gaussian distribution:</p>
+<pre class="literal-block">
+clevel=0.68268949 # 1.0-sigma
+use_gaussian=1 # gaussian distribution from min value to max value
+</pre>
+<p>and specify the number of walkers and the number of iterations:</p>
+<pre class="literal-block">
+walk_num=30
+iteration_num=100
+</pre>
+<p>Now you provide the given upper and lower uncertainties of the input parameters:</p>
+<pre class="literal-block">
+input1 = np.array([1., 2.])
+input1_err = np.array([0.2, 0.5])
+input1_err_p = input1_err
+input1_err_m = -input1_err
+output1 = myfunc21(input1)
+output1_num = len(output1)
+</pre>
+<p>You should load the <strong>pyemcee</strong> library class as follows:</p>
+<pre class="literal-block">
+import pyemcee
+import numpy as np
+</pre>
+<p>You can then create the MCMC sample and propagate the uncertainties of the input parameters into your defined functions as follows:</p>
+<pre class="literal-block">
+mcmc_sim = pyemcee.hammer(myfunc21, input1, input1_err_m,
+                          input1_err_p, output1, walk_num,
+                          iteration_num, use_gaussian)
+</pre>
+<p>To determine the upper and lower errors of the function outputs, you need to run:</p>
+<pre class="literal-block">
+output1_error = pyemcee.find_errors(output1, mcmc_sim, clevel, do_plot=1)
+</pre>
+<p>which shows the following distribution histograms:</p>
+<img alt="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram0.png" src="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram0.png" style="width: 400px;" />
+<img alt="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram1.png" src="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram1.png" style="width: 400px;" />
+<p>To print the results:</p>
+<pre class="literal-block">
+for i in range(0, output1_num):
+   print(output1[i], output1_error[i,:])
+</pre>
+<p>which provide the upper and lower limits on each parameter:</p>
+<pre class="literal-block">
+3.0 [-0.35801017 0.35998471]
+2.0 [-0.37573196 0.36297235]
+</pre>
+<p>For other standard deviation, you should use different confidence levels:</p>
+<pre class="literal-block">
+clevel=0.38292492 # 0.5-sigma
+clevel=0.68268949 # 1.0-sigma
+clevel=0.86638560 # 1.5-sigma
+clevel=0.90       # 1.645-sigma
+clevel=0.95       # 1.960-sigma
+clevel=0.95449974 # 2.0-sigma
+clevel=0.98758067 # 2.5-sigma
+clevel=0.99       # 2.575-sigma
+clevel=0.99730020 # 3.0-sigma
+clevel=0.99953474 # 3.5-sigma
+clevel=0.99993666 # 4.0-sigma
+clevel=0.99999320 # 4.5-sigma
+clevel=0.99999943 # 5.0-sigma
+clevel=0.99999996 # 5.5-sigma
+clevel=0.999999998# 6.0-sigma
+</pre>
+</div>
+<div class="section" id="documentation">
+<h1>Documentation</h1>
+<p>For more information on how to use the API functions from the pyemcee library, please read the <a class="reference external" href="https://mcfit.github.io/pyemcee/doc">API Documentation</a> published on <a class="reference external" href="https://mcfit.github.io/pyemcee">mcfit.github.io/pyemcee</a>.</p>
+</div>
+</div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/mcfit/pyemcee">pyemcee</a> is maintained by <a href="https://github.com/danehkar">Ashkbiz Danehkar</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
