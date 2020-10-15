@@ -3,7 +3,7 @@
 """
 This module contains functions for  the affine-invariant Markov 
 chain Monte Carlo (MCMC) ensemble sampler proposed by 
-Goodman & Weare (2010)
+Goodman & Weare (2010).
 """
 
 # A. Danehkar
@@ -21,77 +21,49 @@ __all__ = ["hammer","find_errors"]
 def initialize(fcn, param, param_err_m, param_err_p, walk_num, output_num, use_gaussian, functargs=None):
    """
         This function returne the initialized walkers for each free parameter.
-   
-    :Returns:
-       type=arrays. This function returns the initialized walker.
-   
-    :Keywords:
-        FUNCTARGS    :  in, not required, type=parameter
-                        the function arguments (not used for MCMC)
-   
-   
-    :Params:
-        fcn          :  in, required, type=string
-                        the calling function name
-   
-        param        :  in, required, type=arrays
-                        the input parameters array used by
-                        the calling function.
-   
-        param_err_m  :  in, required, type=arrays
-                        the lower limit uncertainty array of
-                         the parameters for the calling function.
-   
-        param_err_p  :  in, required, type=arrays
-                        the upper limit uncertainty array of
-                         the parameters for the calling function.
-   
-        walk_num     :  in, required, type=integer
-                        the number of the random walkers.
-   
-        output_num   :  in, required, type=integer
-                        the number of the output array returned
-                        by the calling function.
-   
-        use_gaussian  :  in, required, type=boolean
-                         if sets to 1, the walkers are initialized as a gaussian
-                         over the specified range between the min and max values of
-                         each free parameter,
-                         otherwise, the walkers are initialized uniformly over
-                         the specified range between the min and max values of
-                         each free parameter.
-   
-    :Examples:
+
        For example::
    
-        >>> x_walk=initialize(fcn, input, input_err, walk_num, $
-        >>>                   output_num, use_gaussian))
+        >> x_walk=initialize(fcn, input, input_err, walk_num, 
+        >>                   output_num, use_gaussian))
    
-    :Categories:
-      MCMC
-   
-    :Dirs:
-     ./
-         Main routines
-   
-    :Author:
-      Ashkbiz Danehkar
-   
-    :Copyright:
-      This library is released under a GNU General Public License.
-   
-    :Version:
-      0.2.0
-   
-    :History:
-        15/03/2017, A. Danehkar, IDL code written
-                    Adopted from emcee() of sl_emcee
-                    by M.A. Nowak included in isisscripts
-   
-        01/05/2020, A. Danehkar, function arguments added
 
-        05/09/2020, A. Danehkar, Transferred from IDL to Python
+    :return: This function returns the initialized walker.
+    :rtype: arrays
+
+    :param functargs: the function arguments (not used for MCMC).
+    :type functargs: parameter, optional
+        
+    :param fcn: the calling function name.
+    :type fcn: str               
+   
+    :param param: the input parameters array used by the calling function.
+    :type param: arrays   
+    
+    :param param_err_m: the lower limit uncertainty array of the parameters for the calling function.
+    :type param_err_m: arrays   
+
+    :param param_err_p: the upper limit uncertainty array of the parameters for the calling function.
+    :type param_err_p: arrays   
+    
+    :param walk_num: the number of the random walkers.
+    :type walk_num: int   
+    
+    :param output_num: the number of the output array returned by the calling function.
+    :type output_num: int 
+
+    :param use_gaussian: if sets to 1, the walkers are initialized as a gaussian over the specified range between the min and max values of each free parameter, otherwise, the walkers are initialized uniformly over the specified range between the min and max values of each free parameter.              
+    :type use_gaussian: boolean 
+   
    """
+   
+#    History:
+#        15/03/2017, A. Danehkar, IDL code written
+#                    Adopted from emcee() of sl_emcee
+#                    by M.A. Nowak included in isisscripts  
+#        01/05/2020, A. Danehkar, function arguments added
+#        05/09/2020, A. Danehkar, Transferred from IDL to Python
+
 
    #fcnargs = functargs
    
@@ -134,52 +106,31 @@ def inv_tot_dist(z, z_a, z_b):
         This function returne the inverse Cumulative Distribution Function: 1/sqrt(z)
         if the random number generator z is between 1/z_a and z_b, is used
         to generate for a 1/sqrt(z) probability distribution.
-   
-    :Returns:
-       type=arrays. This function returns the lower and higher
-                    linear histogram grids (hist_lo, hist_hi)
-   
-    :Params:
-        z       :  in, required, type=float
-                   the a random number generator for the probability
-                   distribution 1/sqrt(z).
-   
-        z_a     :  in, required, type=float
-                   the inverse lower limit for the random number
-                   generator z: 1/z_a <= z.
-   
-        z_b     :  in, required, type=float
-                   the higher limit for the random number
-                   generator z: z <= b.
-   
-    :Examples:
+
        For example::
    
-        >>> z = inv_tot_dist(random_num, adjust_scale_low, adjust_scale_high);
+        >> z = inv_tot_dist(random_num, adjust_scale_low, adjust_scale_high);
+        
+    :return: This function returns the lower and higher linear histogram grids (hist_lo, hist_hi).
+    :rtype: arrays       
    
-    :Categories:
-      MCMC
+    :param z: the a random number generator for the probability distribution 1/sqrt(z).
+    :type z: float
+    
+    :param z_a: the inverse lower limit for the random number generator z: 1/z_a <= z.
+    :type z_a: float
+                   
+    :param z_b: the higher limit for the random number generator z: z <= b.
+    :type z_b: float
    
-    :Dirs:
-     ./
-         Subroutines
-   
-    :Author:
-      Ashkbiz Danehkar
-   
-    :Copyright:
-      This library is released under a GNU General Public License.
-   
-    :Version:
-      0.2.0
-   
-    :History:
-        15/03/2017, A. Danehkar, IDL code written
-                    Adopted from icdf() of sl_emcee
-                    by M.A. Nowak included in isisscripts
-
-        05/09/2020, A. Danehkar, Transferred from IDL to Python
    """
+   
+#    History:
+#        15/03/2017, A. Danehkar, IDL code written
+#                    Adopted from icdf() of sl_emcee
+#                    by M.A. Nowak included in isisscripts
+#        05/09/2020, A. Danehkar, Transferred from IDL to Python
+
    x1 = 1. / (np.sqrt(z_a * z_b) - 1.)
    x2 = 1. / x1 ** 2. / z_a
    return x2 * (z + x1) ** 2
@@ -187,53 +138,36 @@ def inv_tot_dist(z, z_a, z_b):
 def linear_grid(x_min, x_max, nbins):
    """
         This procedure generates a linear grid of histogram bins.
-   
-    :Params:
-        x_min    :  in, required, type=float
-                    the lower limit.
-   
-        x_max    :  in, required, type=float
-                    the higher limit.
-   
-        nbins    :  in, required, type=float
-                    the bins number.
-   
-        hist_lo  :  out, required, type=arrays
-                    returns the lower linear histogram grid,
-   
-        hist_hi  :  out, required, type=arrays
-                    returns the higher linear histogram grid.
-   
-    :Examples:
+
        For example::
    
-        >>> x_min=1
-        >>> x_max=20
-        >>> nbins=1000
-        >>> lo, hi = linear_grid(x_min, x_max, nbins)
-   
-    :Categories:
-      MCMC
-   
-    :Dirs:
-     ./
-         Subroutines
-   
-    :Author:
-      Ashkbiz Danehkar
-   
-    :Copyright:
-      This library is released under a GNU General Public License.
-   
-    :Version:
-      0.2.0
-   
-    :History:
-        15/03/2017, A. Danehkar, IDL code written
-                    Adopted from the S-Lang function linear_grid() in isis
+        >> x_min=1
+        >> x_max=20
+        >> nbins=1000
+        >> lo, hi = linear_grid(x_min, x_max, nbins)
+        
+    :param x_min: the lower limit.
+    :type x_min: float
+    
+    :param x_max: the higher limit.
+    :type x_max: float
+    
+    :param nbins: the bins number.
+    :type nbins: float
+    
+    :param hist_lo: returns the lower linear histogram grid.
+    :type hist_lo: arrays
+    
+    :param hist_hi: returns the higher linear histogram grid.
+    :type hist_hi: arrays
 
-        05/09/2020, A. Danehkar, Transferred from IDL to Python
    """
+   
+#    History:
+#        15/03/2017, A. Danehkar, IDL code written
+#                    Adopted from the S-Lang function linear_grid() in isis
+#        05/09/2020, A. Danehkar, Transferred from IDL to Python
+
    step = (float(x_max) - float(x_min)) /float(nbins)
    hist_lo = np.arange(int(nbins)) * step + x_min
    hist_hi = np.arange(int(nbins) + 1.) * step + x_min
@@ -257,58 +191,38 @@ def update_walk(fcn, random_num, x_a, x_b, functargs=None):
         This function creates the trial walker, examines
         whether it is acceptable, and returns the updated walker.
    
-    :Returns:
-       type=arrays. This function returns the updated walker.
-   
-    :Keywords:
-        FUNCTARGS    :  in, optional, type=parameter
-                        the function arguments
-   
-    :Params:
-        fcn          :  in, required, type=string
-                        the calling function name.
-   
-        random_num   :  in, required, type=integer
-                        the random number.
-   
-        x_a          :  in, required, type=arrays
-                        the vector of the parameters
-                        for a specific walker.
-   
-        x_b          :  in, required, type=arrays
-                        the array of the walker parameters.
-   
-    :Examples:
        For example::
    
-        >>> x_output[j,:]=update_walk(fcn,a_random[random_num[j],:],$
-        >>>                           array_xwalk,x_walk[:,b_walk])
+        >> x_output[j,:]=update_walk(fcn,a_random[random_num[j],:],
+        >>                           array_xwalk,x_walk[:,b_walk])
+        
+    :return: This function returns the updated walker.
+    :rtype: arrays
    
-    :Categories:
-      MCMC
-   
-    :Dirs:
-     ./
-         Main routines
-   
-    :Author:
-      Ashkbiz Danehkar
-   
-    :Copyright:
-      This library is released under a GNU General Public License.
-   
-    :Version:
-      0.2.0
-   
-    :History:
-        15/03/2017, A. Danehkar, IDL code written
-                    Adopted from update_walker() of sl_emcee
-                    by M.A. Nowak included in isisscripts
-   
-        01/05/2020, A. Danehkar, function arguments added
+    :param functargs: the function arguments.
+    :type functargs: parameter, optional
+    
+    :param fcn: the calling function name.
+    :type fcn: str
+    
+    :param random_num: the random number.
+    :type random_num: int
 
-        05/09/2020, A. Danehkar, Transferred from IDL to Python
+    :param x_a: the vector of the parameters for a specific walker.
+    :type x_a: arrays
+                      
+    :param x_b: the array of the walker parameters.
+    :type x_b: arrays                    
+   
    """
+   
+#    History:
+#        15/03/2017, A. Danehkar, IDL code written
+#                    Adopted from update_walker() of sl_emcee
+#                    by M.A. Nowak included in isisscripts 
+#        01/05/2020, A. Danehkar, function arguments added
+#        05/09/2020, A. Danehkar, Transferred from IDL to Python
+
    fcnargs = functargs
    
    adjust_scale_low = 2.0
@@ -330,77 +244,51 @@ def hammer(fcn, input, input_err_m, input_err_p, output, walk_num, iteration_num
    """
         This function runs the affine-invariant MCMC Hammer,
         and returns the MCMC simulations
-   
-    :Returns:
-       type=arrays. This function returns the results of the MCMC simulations.
-   
-    :Keywords:
-        FUNCTARGS    :  in, not required, type=parameter
-                        the function arguments (not used for MCMC)
-   
-    :Params:
-        fcn          :  in, required, type=string
-                        the calling function name
-   
-        input        :  in, required, type=float
-                        the input parameters array used by the calling function.
-   
-        input_err_m  :  in, required, type=float
-                        the lower limit uncertainty array of the parameters
-                        for the calling function.
-   
-        input_err_p  :  in, required, type=float
-                        the upper limit uncertainty array of the parameters
-                        for the calling function.
-   
-        output       :  in, required, type=arrays
-                        the output array returned by the calling function.
-   
-        walk_num     :  in, required, type=integer
-                        the number of the random walkers
-   
-        iteration_num:  in, required, type=integer
-                        the number of the MCMC iteration
-   
-        use_gaussian  :  in, required, type=boolean
-                         if sets to 1, the walkers are initialized as a gaussian
-                         over the specified range between the min and max values of
-                         each free parameter,
-                         otherwise, the walkers are initialized uniformly over
-                         the specified range between the min and max values of
-                         each free parameter.
-   
-    :Examples:
+
        For example::
    
-        >>> mcmc_sim=pyemcee.hammer(myfunc, input, input_err, output, $
-        >>>                         walk_num, iteration_num, use_gaussian)
-   
-    :Categories:
-      MCMC
-   
-    :Dirs:
-     ./
-         Main routines
-   
-    :Author:
-      Ashkbiz Danehkar
-   
-    :Copyright:
-      This library is released under a GNU General Public License.
-   
-    :Version:
-      0.2.0
-   
-    :History:
-        15/03/2017, A. Danehkar, IDL code written
-                    Adopted from emcee() of sl_emcee
-                    by M.A. Nowak included in isisscripts
-   
-        01/05/2020, A. Danehkar, function arguments added
+        >> mcmc_sim=pyemcee.hammer(myfunc, input, input_err, output, 
+        >>                         walk_num, iteration_num, use_gaussian)
+           
+    :return: This function returns the results of the MCMC simulations.
+    :rtype: arrays
 
-        05/09/2020, A. Danehkar, Transferred from IDL to Python
+    :param functargs: the function arguments (not used for MCMC).
+    :type functargs: parameter, optional
+        
+    :param fcn: the calling function name.
+    :type fcn: str               
+   
+    :param input: the input parameters array used by the calling function.
+    :type input: float   
+    
+    :param input_err_m: the lower limit uncertainty array of the parameters for the calling function.
+    :type input_err_m: float   
+
+    :param input_err_p: the upper limit uncertainty array of the parameters for the calling function.
+    :type input_err_p: float   
+
+    :param output: the output array returned by the calling function.
+    :type output: arrays   
+    
+    :param walk_num: the number of the random walkers.
+    :type walk_num: int   
+    
+    :param iteration_num: the number of the MCMC iteration.
+    :type iteration_num: int 
+
+    :param use_gaussian: if sets to 1, the walkers are initialized as a gaussian over the specified range between the min and max values of each free parameter, otherwise, the walkers are initialized uniformly over the specified range between the min and max values of each free parameter.              
+    :type use_gaussian: boolean 
+
    """
+   
+#    History:
+#        15/03/2017, A. Danehkar, IDL code written
+#                    Adopted from emcee() of sl_emcee
+#                    by M.A. Nowak included in isisscripts
+#        01/05/2020, A. Danehkar, function arguments added
+#        05/09/2020, A. Danehkar, Transferred from IDL to Python
+
    fcnargs = functargs
    
    output_num = len(output)
@@ -462,69 +350,36 @@ def find_errors(output, mcmc_sim, clevel, do_plot=None, image_output_path=None):
         This function returns the uncertainties of the function outputs
         based on the confidence level.
 
-    :Returns:
-       type=arrays. This function returns uncertainties.
-
-    :Keywords:
-        do_plot  :  in, optional, type=boolean
-                    set to plot a normalized histogram of the MCMC chain
-
-        image_output_path    :    in, optional, type=string
-                                  the image output path
-
-    :Params:
-        output   :  in, required, type=arrays
-                    the output array returned by the calling function.
-
-        mcmc_sim :  in, required, type=arrays
-                    the results of the MCMC simulations from hammer().
-
-        clevel   :  in, required, type=float
-                    the confidence level for the the lower and upper limits.
-                    clevel=0.38292492 ; 0.5-sigma,
-                    clevel=0.68268949 ; 1.0-sigma,
-                    clevel=0.86638560 ; 1.5-sigma,
-                    clevel=0.90       ; 1.645-sigma,
-                    clevel=0.95       ; 1.960-sigma,
-                    clevel=0.95449974 ; 2.0-sigma,
-                    clevel=0.98758067 ; 2.5-sigma,
-                    clevel=0.99       ; 2.575-sigma,
-                    clevel=0.99730020 ; 3.0-sigma,
-                    clevel=0.99953474 ; 3.5-sigma,
-                    clevel=0.99993666 ; 4.0-sigma,
-                    clevel=0.99999320 ; 4.5-sigma,
-                    clevel=0.99999943 ; 5.0-sigma,
-                    clevel=0.99999996 ; 5.5-sigma,
-                    clevel=0.999999998; 6.0-sigma.
-
-    :Examples:
        For example::
 
-        >>> output_error=pyemcee.find_erros(output, mcmc_sim, clevel)
+        >> output_error=pyemcee.find_erros(output, mcmc_sim, clevel)
+        
+    :return: This function returns uncertainties.
+    :rtype: arrays
 
-    :Categories:
-      MCMC, Uncertainty
+    :param do_plot: set to plot a normalized histogram of the MCMC chain.
+    :type do_plot: boolean  
+    
+    :param image_output_path: the image output path.
+    :type image_output_path: str                                
 
-    :Dirs:
-     ./
-         Main routines
+    :param output: the output array returned by the calling function.
+    :type output: arrays  
 
-    :Author:
-      Ashkbiz Danehkar
+    :param mcmc_sim: the results of the MCMC simulations from hammer().
+    :type mcmc_sim: arrays  
 
-    :Copyright:
-      This library is released under a GNU General Public License.
-
-    :Version:
-      0.2.0
-
-    :History:
-        15/03/2017, A. Danehkar, IDL code written
-                    Adopted from chain_hist() of sl_emcee
-                    by M.A. Nowak included in isisscripts
-
-        05/09/2020, A. Danehkar, Transferred from IDL to Python
+    :param clevel: the confidence level for the the lower and upper limits. clevel=0.38292492 (0.5-sigma); clevel=0.68268949 (1.0-sigma); clevel=0.86638560 (1.5-sigma); clevel=0.90 (1.645-sigma); clevel=0.95 (1.960-sigma); clevel=0.95449974 (2.0-sigma); clevel=0.98758067 (2.5-sigma); clevel=0.99 (2.575-sigma); clevel=0.99730020 (3.0-sigma); clevel=0.99953474 (3.5-sigma); clevel=0.99993666 (4.0-sigma); clevel=0.99999320 (4.5-sigma); clevel=0.99999943 (5.0-sigma); clevel=0.99999996 (5.5-sigma); clevel=0.999999998(6.0-sigma).
+    :type clevel: float  
+                    
    """
+   
+#    History:
+#        15/03/2017, A. Danehkar, IDL code written
+#                    Adopted from chain_hist() of sl_emcee
+#                    by M.A. Nowak included in isisscripts
+#        05/09/2020, A. Danehkar, Transferred from IDL to Python
+
    nbins = 50.
    output_num = len(output)
    output_error = np.zeros((output_num, 2))
