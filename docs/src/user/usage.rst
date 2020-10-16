@@ -1,69 +1,8 @@
-=======
-pyemcee
-=======
+Usage
+=====
 
-.. image:: https://img.shields.io/pypi/v/pyemcee.svg?style=flat
-    :target: https://pypi.python.org/pypi/pyemcee/
-    :alt: PyPI Version
-    
-.. image:: https://travis-ci.org/mcfit/pyemcee.svg?branch=master
-    :target: https://travis-ci.org/mcfit/pyemcee
-    :alt: Build Status
-    
-.. image:: https://ci.appveyor.com/api/projects/status/oqnksaooj338xn4d?svg=true
-    :target: https://ci.appveyor.com/project/danehkar/pyemcee
-    :alt: Build Status
-    
-.. image:: https://coveralls.io/repos/github/mcfit/pyemcee/badge.svg?
-    :target: https://coveralls.io/github/mcfit/pyemcee?branch=master
-    :alt: Coverage Status
-    
-.. image:: https://img.shields.io/badge/license-GPL-blue.svg
-    :target: https://github.com/mcfit/pyemcee/blob/master/LICENSE
-    :alt: GitHub license
-    
-.. image:: https://img.shields.io/conda/vn/conda-forge/pyemcee.svg
-    :target: https://anaconda.org/conda-forge/pyemcee
-    :alt: Anaconda Cloud
-    
-.. image:: https://img.shields.io/badge/python-2.7%2C%203.4%2C%203.5-blue.svg
-    :alt: Support Python versions 2.7, 3.4 and 3.5
-
-Description
-===========
-
-**pyemcee** is a Python implementation of the *affine-invariant Markov chain Monte Carlo (MCMC) ensemble sampler*, based on `sl_emcee <https://github.com/mcfit/sl_emcee>`_ by `M. A. Nowak <http://space.mit.edu/home/mnowak/isis_vs_xspec/>`_, an S-Lang/`ISIS <http://space.mit.edu/cxc/isis/>`_ implementation of the MCMC Hammer proposed by `Goodman & Weare (2010) <http://dx.doi.org/10.2140/camcos.2010.5.65>`_, and also implemented in Python (`emcee <https://github.com/dfm/emcee>`_) by `Foreman-Mackey et al. (2013) <http://adsabs.harvard.edu/abs/2013PASP..125..306F>`_. 
-
-
-Installation
-============
-
-To install the last version, all you should need to do is
-
-.. code-block::
-
-    $ python setup.py install
-
-To install the stable version, you can use the preferred installer program (pip):
-
-.. code-block::
-
-    $ pip install pyemcee
-
-or you can install it from the cross-platform package manager *conda*:
-
-.. code-block::
-
-    $ conda install -c conda-forge pyemcee
-
-This package requires the following packages:
-
-    - `NumPy <https://numpy.org/>`_
-    - `SciPy <https://scipy.org/scipylib/>`_
-    - `Matplotlib <https://matplotlib.org/>`_
-
-How to Use
-==========
+.. role:: python(code)
+   :language: python
 
 The Documentation of the functions provides in detail in the *API Documentation* (`mcfit.github.io/pyemcee/doc <https://mcfit.github.io/pyemcee/doc>`_). This Python library creates the MCMC sampling  for given upper and lower uncertainties, and propagates uncertainties of parameters into the function
 
@@ -116,10 +55,10 @@ To determine the upper and lower errors of the function outputs, you need to run
 which shows the following distribution histograms:
 
 .. image:: https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram0.png
-    :width: 100
+    :width: 400
 
 .. image:: https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram1.png
-    :width: 100
+    :width: 400
 
 To print the results::
 
@@ -149,8 +88,4 @@ For other standard deviation, you should use different confidence levels::
     clevel=0.99999996 # 5.5-sigma
     clevel=0.999999998# 6.0-sigma
 
-Documentation
-=============
-
-For more information on how to use the API functions from the pyemcee library, please read the `API Documentation  <https://mcfit.github.io/pyemcee/doc>`_ published on `mcfit.github.io/pyemcee <https://mcfit.github.io/pyemcee>`_.
 
