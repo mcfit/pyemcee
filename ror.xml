@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:ror="http://rorweb.com/0.1/" >
+<channel>
+  <title>ROR Sitemap for https://mcfit.github.io/pyemcee/</title>
+  <link>https://mcfit.github.io/pyemcee/</link>
+
+<item>
+     <link>https://mcfit.github.io/pyemcee/</link>
+     <title>pyemcee - Python implementation of the affine-invariant MCMC Hammer</title>
+     <description>pyemcee - A Python package developed to perform affine-invariant Markov chain Monte Carlo (MCMC) ensemble sampler - maintained by Ashkbiz Danehkar</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>0</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://mcfit.github.io/pyemcee/doc/</link>
+     <title>Welcome to pyemcee’s documentation! &amp;mdash; pyemcee 0.2.0 documentation</title>
+     <description>Welcome to pyemcee’s documentation! &amp;mdash; pyemcee 0.2.0 documentation</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>1</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://mcfit.github.io/pyemcee/doc/user/readme.html</link>
+     <title>Introduction &amp;mdash; pyemcee 0.2.0 documentation</title>
+     <description>Introduction &amp;mdash; pyemcee 0.2.0 documentation</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>2</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://mcfit.github.io/pyemcee/doc/user/installation.html</link>
+     <title>Installation &amp;mdash; pyemcee 0.2.0 documentation</title>
+     <description>Installation &amp;mdash; pyemcee 0.2.0 documentation</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>2</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://mcfit.github.io/pyemcee/doc/user/usage.html</link>
+     <title>Usage &amp;mdash; pyemcee 0.2.0 documentation</title>
+     <description>Usage &amp;mdash; pyemcee 0.2.0 documentation</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>2</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://mcfit.github.io/pyemcee/doc/user/reference.html</link>
+     <title>References &amp;mdash; pyemcee 0.2.0 documentation</title>
+     <description>References &amp;mdash; pyemcee 0.2.0 documentation</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>2</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://mcfit.github.io/pyemcee/doc/api/pyemcee.main.html</link>
+     <title>pyemcee.main package &amp;mdash; pyemcee 0.2.0 documentation</title>
+     <description>pyemcee.main package &amp;mdash; pyemcee 0.2.0 documentation</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>2</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://mcfit.github.io/pyemcee/doc/genindex.html</link>
+     <title>Index &amp;mdash; pyemcee 0.2.0 documentation</title>
+     <description>Index &amp;mdash; pyemcee 0.2.0 documentation</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>2</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://mcfit.github.io/pyemcee/doc/py-modindex.html</link>
+     <title>Python Module Index &amp;mdash; pyemcee 0.2.0 documentation</title>
+     <description>Python Module Index &amp;mdash; pyemcee 0.2.0 documentation</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>2</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://mcfit.github.io/pyemcee/doc/search.html</link>
+     <title>Search &amp;mdash; pyemcee 0.2.0 documentation</title>
+     <description>Search &amp;mdash; pyemcee 0.2.0 documentation</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>2</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://mcfit.github.io/pyemcee/doc/index.html</link>
+     <title>Welcome to pyemcee’s documentation! &amp;mdash; pyemcee 0.2.0 documentation</title>
+     <description>Welcome to pyemcee’s documentation! &amp;mdash; pyemcee 0.2.0 documentation</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>3</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://mcfit.github.io/pyemcee/doc/_modules/pyemcee.html</link>
+     <title>pyemcee &amp;mdash; pyemcee 0.2.0 documentation</title>
+     <description>pyemcee &amp;mdash; pyemcee 0.2.0 documentation</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>3</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>https://mcfit.github.io/pyemcee/doc/_modules/index.html</link>
+     <title>Overview: module code &amp;mdash; pyemcee 0.2.0 documentation</title>
+     <description>Overview: module code &amp;mdash; pyemcee 0.2.0 documentation</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>4</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+</channel>
+</rss>
+  
