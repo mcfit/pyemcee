@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyemcee.main package &mdash; pyemcee 0.2.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="References" href="../user/reference.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pyemcee
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/reference.html">References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pyemcee.main package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-pyemcee">pyemcee main module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyemcee</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>pyemcee.main package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/pyemcee.main.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pyemcee-main-package">
+<h1>pyemcee.main package<a class="headerlink" href="#pyemcee-main-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyemcee">
+<span id="pyemcee-main-module"></span><h2>pyemcee main module<a class="headerlink" href="#module-pyemcee" title="Permalink to this headline">¶</a></h2>
+<p>This module contains functions for  the affine-invariant Markov 
+chain Monte Carlo (MCMC) ensemble sampler proposed by 
+Goodman &amp; Weare (2010).</p>
+<dl class="py function">
+<dt id="pyemcee.find_errors">
+<code class="sig-prename descclassname">pyemcee.</code><code class="sig-name descname">find_errors</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">mcmc_sim</span></em>, <em class="sig-param"><span class="n">clevel</span></em>, <em class="sig-param"><span class="n">do_plot</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">image_output_path</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemcee.html#find_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemcee.find_errors" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><blockquote>
+<div><p>This function returns the uncertainties of the function outputs
+based on the confidence level.</p>
+</div></blockquote>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">output_error</span><span class="o">=</span><span class="n">pyemcee</span><span class="o">.</span><span class="n">find_erros</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">mcmc_sim</span><span class="p">,</span> <span class="n">clevel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>This function returns uncertainties.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>arrays</p>
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>do_plot</strong> (<em>boolean</em>) – set to plot a normalized histogram of the MCMC chain.</p></li>
+<li><p><strong>image_output_path</strong> (<em>str</em>) – the image output path.</p></li>
+<li><p><strong>output</strong> (<em>arrays</em>) – the output array returned by the calling function.</p></li>
+<li><p><strong>mcmc_sim</strong> (<em>arrays</em>) – the results of the MCMC simulations from hammer().</p></li>
+<li><p><strong>clevel</strong> (<em>float</em>) – the confidence level for the the lower and upper limits. clevel=0.38292492 (0.5-sigma); clevel=0.68268949 (1.0-sigma); clevel=0.86638560 (1.5-sigma); clevel=0.90 (1.645-sigma); clevel=0.95 (1.960-sigma); clevel=0.95449974 (2.0-sigma); clevel=0.98758067 (2.5-sigma); clevel=0.99 (2.575-sigma); clevel=0.99730020 (3.0-sigma); clevel=0.99953474 (3.5-sigma); clevel=0.99993666 (4.0-sigma); clevel=0.99999320 (4.5-sigma); clevel=0.99999943 (5.0-sigma); clevel=0.99999996 (5.5-sigma); clevel=0.999999998(6.0-sigma).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pyemcee.hammer">
+<code class="sig-prename descclassname">pyemcee.</code><code class="sig-name descname">hammer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fcn</span></em>, <em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">input_err_m</span></em>, <em class="sig-param"><span class="n">input_err_p</span></em>, <em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">walk_num</span></em>, <em class="sig-param"><span class="n">iteration_num</span></em>, <em class="sig-param"><span class="n">use_gaussian</span></em>, <em class="sig-param"><span class="n">functargs</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemcee.html#hammer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemcee.hammer" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><blockquote>
+<div><p>This function runs the affine-invariant MCMC Hammer,
+and returns the MCMC simulations</p>
+</div></blockquote>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">mcmc_sim</span><span class="o">=</span><span class="n">pyemcee</span><span class="o">.</span><span class="n">hammer</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">input_err</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> 
+<span class="o">&gt;&gt;</span>                         <span class="n">walk_num</span><span class="p">,</span> <span class="n">iteration_num</span><span class="p">,</span> <span class="n">use_gaussian</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>This function returns the results of the MCMC simulations.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>arrays</p>
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>functargs</strong> (<em>parameter</em><em>, </em><em>optional</em>) – the function arguments (not used for MCMC).</p></li>
+<li><p><strong>fcn</strong> (<em>str</em>) – the calling function name.</p></li>
+<li><p><strong>input</strong> (<em>float</em>) – the input parameters array used by the calling function.</p></li>
+<li><p><strong>input_err_m</strong> (<em>float</em>) – the lower limit uncertainty array of the parameters for the calling function.</p></li>
+<li><p><strong>input_err_p</strong> (<em>float</em>) – the upper limit uncertainty array of the parameters for the calling function.</p></li>
+<li><p><strong>output</strong> (<em>arrays</em>) – the output array returned by the calling function.</p></li>
+<li><p><strong>walk_num</strong> (<em>int</em>) – the number of the random walkers.</p></li>
+<li><p><strong>iteration_num</strong> (<em>int</em>) – the number of the MCMC iteration.</p></li>
+<li><p><strong>use_gaussian</strong> (<em>boolean</em>) – if sets to 1, the walkers are initialized as a gaussian over the specified range between the min and max values of each free parameter, otherwise, the walkers are initialized uniformly over the specified range between the min and max values of each free parameter.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../user/reference.html" class="btn btn-neutral float-left" title="References" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Ashkbiz Danehkar
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

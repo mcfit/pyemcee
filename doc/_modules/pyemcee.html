@@ -1,0 +1,663 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyemcee &mdash; pyemcee 0.2.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pyemcee
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/reference.html">References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/pyemcee.main.html">pyemcee.main package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyemcee</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>pyemcee</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyemcee</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions for  the affine-invariant Markov </span>
+<span class="sd">chain Monte Carlo (MCMC) ensemble sampler proposed by </span>
+<span class="sd">Goodman &amp; Weare (2010).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># A. Danehkar</span>
+<span class="c1">#</span>
+<span class="c1"># Version 0.2.0, 07/09/2020</span>
+<span class="c1"># First Release</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;hammer&quot;</span><span class="p">,</span><span class="s2">&quot;find_errors&quot;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">fcn</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">param_err_m</span><span class="p">,</span> <span class="n">param_err_p</span><span class="p">,</span> <span class="n">walk_num</span><span class="p">,</span> <span class="n">output_num</span><span class="p">,</span> <span class="n">use_gaussian</span><span class="p">,</span> <span class="n">functargs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+   <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function returne the initialized walkers for each free parameter.</span>
+
+<span class="sd">       For example::</span>
+<span class="sd">   </span>
+<span class="sd">        &gt;&gt; x_walk=initialize(fcn, input, input_err, walk_num, </span>
+<span class="sd">        &gt;&gt;                   output_num, use_gaussian))</span>
+<span class="sd">   </span>
+
+<span class="sd">    :return: This function returns the initialized walker.</span>
+<span class="sd">    :rtype: arrays</span>
+
+<span class="sd">    :param functargs: the function arguments (not used for MCMC).</span>
+<span class="sd">    :type functargs: parameter, optional</span>
+<span class="sd">        </span>
+<span class="sd">    :param fcn: the calling function name.</span>
+<span class="sd">    :type fcn: str               </span>
+<span class="sd">   </span>
+<span class="sd">    :param param: the input parameters array used by the calling function.</span>
+<span class="sd">    :type param: arrays   </span>
+<span class="sd">    </span>
+<span class="sd">    :param param_err_m: the lower limit uncertainty array of the parameters for the calling function.</span>
+<span class="sd">    :type param_err_m: arrays   </span>
+
+<span class="sd">    :param param_err_p: the upper limit uncertainty array of the parameters for the calling function.</span>
+<span class="sd">    :type param_err_p: arrays   </span>
+<span class="sd">    </span>
+<span class="sd">    :param walk_num: the number of the random walkers.</span>
+<span class="sd">    :type walk_num: int   </span>
+<span class="sd">    </span>
+<span class="sd">    :param output_num: the number of the output array returned by the calling function.</span>
+<span class="sd">    :type output_num: int </span>
+
+<span class="sd">    :param use_gaussian: if sets to 1, the walkers are initialized as a gaussian over the specified range between the min and max values of each free parameter, otherwise, the walkers are initialized uniformly over the specified range between the min and max values of each free parameter.              </span>
+<span class="sd">    :type use_gaussian: boolean </span>
+<span class="sd">   </span>
+<span class="sd">   &quot;&quot;&quot;</span>
+   
+<span class="c1">#    History:</span>
+<span class="c1">#        15/03/2017, A. Danehkar, IDL code written</span>
+<span class="c1">#                    Adopted from emcee() of sl_emcee</span>
+<span class="c1">#                    by M.A. Nowak included in isisscripts  </span>
+<span class="c1">#        01/05/2020, A. Danehkar, function arguments added</span>
+<span class="c1">#        05/09/2020, A. Danehkar, Transferred from IDL to Python</span>
+
+
+   <span class="c1">#fcnargs = functargs</span>
+   
+   <span class="n">param_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+   <span class="n">x_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">param_num</span><span class="p">)</span>
+   <span class="n">x_low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">param_num</span><span class="p">)</span>
+   <span class="n">x_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">param_num</span><span class="p">)</span>
+   <span class="n">x_start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">param_num</span><span class="p">,</span> <span class="n">walk_num</span> <span class="o">*</span> <span class="n">param_num</span><span class="p">))</span>
+   <span class="n">x_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">walk_num</span> <span class="o">*</span> <span class="n">param_num</span><span class="p">,</span> <span class="n">output_num</span><span class="p">))</span>
+   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">param_num</span><span class="p">):</span>
+      <span class="n">x_point</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+      <span class="n">x_low</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">param_err_m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+      <span class="n">x_high</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">param_err_p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+      <span class="c1">#x_low[i]   = param[i]-param_err[i]</span>
+      <span class="c1">#x_high[i]  = param[i]+param_err[i]</span>
+   <span class="k">if</span> <span class="n">use_gaussian</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>   
+      <span class="n">scale1</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="mf">3.</span>
+   <span class="k">else</span><span class="p">:</span>   
+      <span class="n">scale1</span> <span class="o">=</span> <span class="mf">1.</span>
+   <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">walk_num</span> <span class="o">*</span> <span class="n">param_num</span> <span class="p">):</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">param_num</span><span class="p">):</span>
+         <span class="k">if</span> <span class="n">use_gaussian</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>   
+            <span class="n">sigma1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span> <span class="c1">#randomn(seed)</span>
+            <span class="k">if</span> <span class="n">sigma1</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>   
+               <span class="n">x_start</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_point</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">sigma1</span> <span class="o">*</span> <span class="n">scale1</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_point</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_low</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>   
+               <span class="n">x_start</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_point</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">sigma1</span> <span class="o">*</span> <span class="n">scale1</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_high</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_point</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+         <span class="k">else</span><span class="p">:</span>   
+            <span class="n">sigma1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span> <span class="c1">#randomu(seed)</span>
+            <span class="n">x_start</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">scale1</span><span class="p">)</span> <span class="o">*</span> <span class="n">x_point</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">scale1</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_low</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">x_high</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_low</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">sigma1</span><span class="p">)</span>
+         <span class="k">if</span> <span class="n">x_start</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">x_low</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">x_start</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_low</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="c1">#</span>
+         <span class="k">if</span> <span class="n">x_start</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">x_high</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">x_start</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_high</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="c1">#</span>
+      <span class="c1">#x_out[j,:] = call_function(fcn, x_start[:,j])</span>
+   <span class="k">return</span> <span class="n">x_start</span>
+
+<span class="k">def</span> <span class="nf">inv_tot_dist</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">z_a</span><span class="p">,</span> <span class="n">z_b</span><span class="p">):</span>
+   <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function returne the inverse Cumulative Distribution Function: 1/sqrt(z)</span>
+<span class="sd">        if the random number generator z is between 1/z_a and z_b, is used</span>
+<span class="sd">        to generate for a 1/sqrt(z) probability distribution.</span>
+
+<span class="sd">       For example::</span>
+<span class="sd">   </span>
+<span class="sd">        &gt;&gt; z = inv_tot_dist(random_num, adjust_scale_low, adjust_scale_high);</span>
+<span class="sd">        </span>
+<span class="sd">    :return: This function returns the lower and higher linear histogram grids (hist_lo, hist_hi).</span>
+<span class="sd">    :rtype: arrays       </span>
+<span class="sd">   </span>
+<span class="sd">    :param z: the a random number generator for the probability distribution 1/sqrt(z).</span>
+<span class="sd">    :type z: float</span>
+<span class="sd">    </span>
+<span class="sd">    :param z_a: the inverse lower limit for the random number generator z: 1/z_a &lt;= z.</span>
+<span class="sd">    :type z_a: float</span>
+<span class="sd">                   </span>
+<span class="sd">    :param z_b: the higher limit for the random number generator z: z &lt;= b.</span>
+<span class="sd">    :type z_b: float</span>
+<span class="sd">   </span>
+<span class="sd">   &quot;&quot;&quot;</span>
+   
+<span class="c1">#    History:</span>
+<span class="c1">#        15/03/2017, A. Danehkar, IDL code written</span>
+<span class="c1">#                    Adopted from icdf() of sl_emcee</span>
+<span class="c1">#                    by M.A. Nowak included in isisscripts</span>
+<span class="c1">#        05/09/2020, A. Danehkar, Transferred from IDL to Python</span>
+
+   <span class="n">x1</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">z_a</span> <span class="o">*</span> <span class="n">z_b</span><span class="p">)</span> <span class="o">-</span> <span class="mf">1.</span><span class="p">)</span>
+   <span class="n">x2</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">x1</span> <span class="o">**</span> <span class="mf">2.</span> <span class="o">/</span> <span class="n">z_a</span>
+   <span class="k">return</span> <span class="n">x2</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">+</span> <span class="n">x1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="k">def</span> <span class="nf">linear_grid</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">nbins</span><span class="p">):</span>
+   <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This procedure generates a linear grid of histogram bins.</span>
+
+<span class="sd">       For example::</span>
+<span class="sd">   </span>
+<span class="sd">        &gt;&gt; x_min=1</span>
+<span class="sd">        &gt;&gt; x_max=20</span>
+<span class="sd">        &gt;&gt; nbins=1000</span>
+<span class="sd">        &gt;&gt; lo, hi = linear_grid(x_min, x_max, nbins)</span>
+<span class="sd">        </span>
+<span class="sd">    :param x_min: the lower limit.</span>
+<span class="sd">    :type x_min: float</span>
+<span class="sd">    </span>
+<span class="sd">    :param x_max: the higher limit.</span>
+<span class="sd">    :type x_max: float</span>
+<span class="sd">    </span>
+<span class="sd">    :param nbins: the bins number.</span>
+<span class="sd">    :type nbins: float</span>
+<span class="sd">    </span>
+<span class="sd">    :param hist_lo: returns the lower linear histogram grid.</span>
+<span class="sd">    :type hist_lo: arrays</span>
+<span class="sd">    </span>
+<span class="sd">    :param hist_hi: returns the higher linear histogram grid.</span>
+<span class="sd">    :type hist_hi: arrays</span>
+
+<span class="sd">   &quot;&quot;&quot;</span>
+   
+<span class="c1">#    History:</span>
+<span class="c1">#        15/03/2017, A. Danehkar, IDL code written</span>
+<span class="c1">#                    Adopted from the S-Lang function linear_grid() in isis</span>
+<span class="c1">#        05/09/2020, A. Danehkar, Transferred from IDL to Python</span>
+
+   <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x_max</span><span class="p">)</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">x_min</span><span class="p">))</span> <span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">nbins</span><span class="p">)</span>
+   <span class="n">hist_lo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">nbins</span><span class="p">))</span> <span class="o">*</span> <span class="n">step</span> <span class="o">+</span> <span class="n">x_min</span>
+   <span class="n">hist_hi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">nbins</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">*</span> <span class="n">step</span> <span class="o">+</span> <span class="n">x_min</span>
+   
+   <span class="k">return</span> <span class="p">(</span><span class="n">hist_lo</span><span class="p">,</span> <span class="n">hist_hi</span><span class="p">)</span>
+
+
+<span class="c1"># Call user function or procedure, with _EXTRA or not, with</span>
+<span class="c1"># derivatives or not.</span>
+<span class="c1">#def call_function(fcn, x_chosen, functkw, fjac=None):</span>
+<span class="k">def</span> <span class="nf">call_function</span><span class="p">(</span><span class="n">fcn</span><span class="p">,</span> <span class="n">x_chosen</span><span class="p">,</span> <span class="n">functargs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+   <span class="k">if</span> <span class="n">functargs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">output</span><span class="o">=</span> <span class="n">fcn</span><span class="p">(</span><span class="n">x_chosen</span><span class="p">)</span>
+   <span class="k">else</span><span class="p">:</span>
+      <span class="n">output</span> <span class="o">=</span> <span class="n">fcn</span><span class="p">(</span><span class="n">x_chosen</span><span class="p">,</span> <span class="n">functargs</span><span class="o">=</span><span class="n">functargs</span><span class="p">)</span>
+   <span class="k">return</span> <span class="n">output</span>
+
+
+<span class="k">def</span> <span class="nf">update_walk</span><span class="p">(</span><span class="n">fcn</span><span class="p">,</span> <span class="n">random_num</span><span class="p">,</span> <span class="n">x_a</span><span class="p">,</span> <span class="n">x_b</span><span class="p">,</span> <span class="n">functargs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+   <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function creates the trial walker, examines</span>
+<span class="sd">        whether it is acceptable, and returns the updated walker.</span>
+<span class="sd">   </span>
+<span class="sd">       For example::</span>
+<span class="sd">   </span>
+<span class="sd">        &gt;&gt; x_output[j,:]=update_walk(fcn,a_random[random_num[j],:],</span>
+<span class="sd">        &gt;&gt;                           array_xwalk,x_walk[:,b_walk])</span>
+<span class="sd">        </span>
+<span class="sd">    :return: This function returns the updated walker.</span>
+<span class="sd">    :rtype: arrays</span>
+<span class="sd">   </span>
+<span class="sd">    :param functargs: the function arguments.</span>
+<span class="sd">    :type functargs: parameter, optional</span>
+<span class="sd">    </span>
+<span class="sd">    :param fcn: the calling function name.</span>
+<span class="sd">    :type fcn: str</span>
+<span class="sd">    </span>
+<span class="sd">    :param random_num: the random number.</span>
+<span class="sd">    :type random_num: int</span>
+
+<span class="sd">    :param x_a: the vector of the parameters for a specific walker.</span>
+<span class="sd">    :type x_a: arrays</span>
+<span class="sd">                      </span>
+<span class="sd">    :param x_b: the array of the walker parameters.</span>
+<span class="sd">    :type x_b: arrays                    </span>
+<span class="sd">   </span>
+<span class="sd">   &quot;&quot;&quot;</span>
+   
+<span class="c1">#    History:</span>
+<span class="c1">#        15/03/2017, A. Danehkar, IDL code written</span>
+<span class="c1">#                    Adopted from update_walker() of sl_emcee</span>
+<span class="c1">#                    by M.A. Nowak included in isisscripts </span>
+<span class="c1">#        01/05/2020, A. Danehkar, function arguments added</span>
+<span class="c1">#        05/09/2020, A. Danehkar, Transferred from IDL to Python</span>
+
+   <span class="n">fcnargs</span> <span class="o">=</span> <span class="n">functargs</span>
+   
+   <span class="n">adjust_scale_low</span> <span class="o">=</span> <span class="mf">2.0</span>
+   <span class="n">adjust_scale_high</span> <span class="o">=</span> <span class="mf">2.0</span>
+   <span class="n">par_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_b</span><span class="p">)</span>
+   <span class="n">b_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_b</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+   <span class="n">x_chosen</span> <span class="o">=</span> <span class="n">x_b</span><span class="p">[:,</span><span class="nb">int</span><span class="p">(</span><span class="n">random_num</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">b_num</span><span class="p">)]</span>
+   <span class="c1"># print, long(random_num[0]*b_num)</span>
+   <span class="n">z</span> <span class="o">=</span> <span class="n">inv_tot_dist</span><span class="p">(</span><span class="n">random_num</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">adjust_scale_low</span><span class="p">,</span> <span class="n">adjust_scale_high</span><span class="p">)</span>
+   <span class="n">x_chosen</span> <span class="o">=</span> <span class="n">x_chosen</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_a</span> <span class="o">-</span> <span class="n">x_chosen</span><span class="p">)</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">fcnargs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>   
+      <span class="n">x_output</span> <span class="o">=</span> <span class="n">call_function</span><span class="p">(</span><span class="n">fcn</span><span class="p">,</span> <span class="n">x_chosen</span><span class="p">,</span> <span class="n">functargs</span><span class="o">=</span><span class="n">fcnargs</span><span class="p">)</span>
+   <span class="k">else</span><span class="p">:</span>   
+      <span class="n">x_output</span> <span class="o">=</span> <span class="n">call_function</span><span class="p">(</span><span class="n">fcn</span><span class="p">,</span> <span class="n">x_chosen</span><span class="p">)</span>
+   <span class="k">return</span> <span class="n">x_output</span>
+
+
+<div class="viewcode-block" id="hammer"><a class="viewcode-back" href="../api/pyemcee.main.html#pyemcee.hammer">[docs]</a><span class="k">def</span> <span class="nf">hammer</span><span class="p">(</span><span class="n">fcn</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">input_err_m</span><span class="p">,</span> <span class="n">input_err_p</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">walk_num</span><span class="p">,</span> <span class="n">iteration_num</span><span class="p">,</span> <span class="n">use_gaussian</span><span class="p">,</span> <span class="n">functargs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+   <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function runs the affine-invariant MCMC Hammer,</span>
+<span class="sd">        and returns the MCMC simulations</span>
+
+<span class="sd">       For example::</span>
+<span class="sd">   </span>
+<span class="sd">        &gt;&gt; mcmc_sim=pyemcee.hammer(myfunc, input, input_err, output, </span>
+<span class="sd">        &gt;&gt;                         walk_num, iteration_num, use_gaussian)</span>
+<span class="sd">           </span>
+<span class="sd">    :return: This function returns the results of the MCMC simulations.</span>
+<span class="sd">    :rtype: arrays</span>
+
+<span class="sd">    :param functargs: the function arguments (not used for MCMC).</span>
+<span class="sd">    :type functargs: parameter, optional</span>
+<span class="sd">        </span>
+<span class="sd">    :param fcn: the calling function name.</span>
+<span class="sd">    :type fcn: str               </span>
+<span class="sd">   </span>
+<span class="sd">    :param input: the input parameters array used by the calling function.</span>
+<span class="sd">    :type input: float   </span>
+<span class="sd">    </span>
+<span class="sd">    :param input_err_m: the lower limit uncertainty array of the parameters for the calling function.</span>
+<span class="sd">    :type input_err_m: float   </span>
+
+<span class="sd">    :param input_err_p: the upper limit uncertainty array of the parameters for the calling function.</span>
+<span class="sd">    :type input_err_p: float   </span>
+
+<span class="sd">    :param output: the output array returned by the calling function.</span>
+<span class="sd">    :type output: arrays   </span>
+<span class="sd">    </span>
+<span class="sd">    :param walk_num: the number of the random walkers.</span>
+<span class="sd">    :type walk_num: int   </span>
+<span class="sd">    </span>
+<span class="sd">    :param iteration_num: the number of the MCMC iteration.</span>
+<span class="sd">    :type iteration_num: int </span>
+
+<span class="sd">    :param use_gaussian: if sets to 1, the walkers are initialized as a gaussian over the specified range between the min and max values of each free parameter, otherwise, the walkers are initialized uniformly over the specified range between the min and max values of each free parameter.              </span>
+<span class="sd">    :type use_gaussian: boolean </span>
+
+<span class="sd">   &quot;&quot;&quot;</span>
+   
+<span class="c1">#    History:</span>
+<span class="c1">#        15/03/2017, A. Danehkar, IDL code written</span>
+<span class="c1">#                    Adopted from emcee() of sl_emcee</span>
+<span class="c1">#                    by M.A. Nowak included in isisscripts</span>
+<span class="c1">#        01/05/2020, A. Danehkar, function arguments added</span>
+<span class="c1">#        05/09/2020, A. Danehkar, Transferred from IDL to Python</span>
+
+   <span class="n">fcnargs</span> <span class="o">=</span> <span class="n">functargs</span>
+   
+   <span class="n">output_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+   <span class="n">x_walk</span> <span class="o">=</span> <span class="n">initialize</span><span class="p">(</span><span class="n">fcn</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">input_err_m</span><span class="p">,</span> <span class="n">input_err_p</span><span class="p">,</span>
+                             <span class="n">walk_num</span><span class="p">,</span> <span class="n">output_num</span><span class="p">,</span> <span class="n">use_gaussian</span><span class="p">,</span>
+                             <span class="n">functargs</span><span class="o">=</span><span class="n">fcnargs</span><span class="p">)</span>
+   <span class="n">input_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+   
+   <span class="n">total_walk_num</span> <span class="o">=</span> <span class="n">walk_num</span> <span class="o">*</span> <span class="n">input_num</span>
+   <span class="n">a_walk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">total_walk_num</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">total_walk_num</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)))</span> <span class="o">*</span> <span class="mi">2</span>
+   <span class="n">b_walk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">total_walk_num</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
+   
+   <span class="n">a_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a_walk</span><span class="p">)</span>
+   <span class="n">b_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">b_walk</span><span class="p">)</span>
+   
+   <span class="n">array_xwalk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">input_num</span><span class="p">)</span>
+   <span class="n">x_output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">max</span><span class="p">([</span><span class="n">a_num</span><span class="p">,</span> <span class="n">b_num</span><span class="p">]),</span> <span class="n">output_num</span><span class="p">))</span>
+   
+   <span class="n">a_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">iteration_num</span> <span class="o">*</span> <span class="n">a_num</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+   <span class="n">b_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">iteration_num</span> <span class="o">*</span> <span class="n">b_num</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">iteration_num</span> <span class="o">*</span> <span class="n">a_num</span><span class="p">):</span>
+      <span class="n">a_random</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span><span class="c1">#randomu(seed)</span>
+      <span class="n">a_random</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span>
+      <span class="n">a_random</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span>
+   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">iteration_num</span> <span class="o">*</span> <span class="n">b_num</span><span class="p">):</span>
+      <span class="n">b_random</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span>
+      <span class="n">b_random</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span>
+      <span class="n">b_random</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span>
+   <span class="n">x_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">a_num</span> <span class="o">+</span> <span class="n">b_num</span><span class="p">,</span> <span class="n">output_num</span><span class="p">))</span>
+   <span class="n">mcmc_sim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">iteration_num</span><span class="p">,</span> <span class="n">a_num</span> <span class="o">+</span> <span class="n">b_num</span><span class="p">,</span> <span class="n">output_num</span><span class="p">))</span>
+   <span class="c1">#sim1=np.zeros(iteration_num,a_num+b_num)</span>
+   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">iteration_num</span><span class="p">):</span>
+   <span class="c1"># first half of walkers</span>
+      <span class="n">random_num</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">a_num</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">a_num</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">a_num</span><span class="p">):</span>
+         <span class="n">array_xwalk</span> <span class="o">=</span> <span class="n">x_walk</span><span class="p">[:,</span><span class="n">a_walk</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span>
+         <span class="n">x_output</span><span class="p">[</span><span class="n">j</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">update_walk</span><span class="p">(</span><span class="n">fcn</span><span class="p">,</span> <span class="n">a_random</span><span class="p">[</span><span class="n">random_num</span><span class="p">[</span><span class="n">j</span><span class="p">],:],</span>
+                                           <span class="n">array_xwalk</span><span class="p">,</span> <span class="n">x_walk</span><span class="p">[:,</span><span class="n">b_walk</span><span class="p">],</span>
+                                           <span class="n">functargs</span><span class="o">=</span><span class="n">fcnargs</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">a_num</span> <span class="p">):</span>
+         <span class="n">x_out</span><span class="p">[</span><span class="n">a_walk</span><span class="p">[</span><span class="n">j</span><span class="p">],:]</span> <span class="o">=</span> <span class="n">x_output</span><span class="p">[</span><span class="n">j</span><span class="p">,:]</span><span class="c1">#</span>
+      <span class="c1"># second half of walkers</span>
+      <span class="n">random_num</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">b_num</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">b_num</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">b_num</span><span class="p">):</span>
+         <span class="n">array_xwalk</span> <span class="o">=</span> <span class="n">x_walk</span><span class="p">[:,</span><span class="n">b_walk</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span>
+         <span class="n">x_output</span><span class="p">[</span><span class="n">j</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">update_walk</span><span class="p">(</span><span class="n">fcn</span><span class="p">,</span> <span class="n">b_random</span><span class="p">[</span><span class="n">random_num</span><span class="p">[</span><span class="n">j</span><span class="p">],:],</span>
+                                           <span class="n">array_xwalk</span><span class="p">,</span> <span class="n">x_walk</span><span class="p">[:,</span><span class="n">a_walk</span><span class="p">],</span>
+                                           <span class="n">functargs</span><span class="o">=</span><span class="n">fcnargs</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">b_num</span><span class="p">):</span>
+         <span class="n">x_out</span><span class="p">[</span><span class="n">b_walk</span><span class="p">[</span><span class="n">j</span><span class="p">],:]</span> <span class="o">=</span> <span class="n">x_output</span><span class="p">[</span><span class="n">j</span><span class="p">,:]</span><span class="c1">#</span>
+      <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">output_num</span><span class="p">):</span>
+         <span class="n">mcmc_sim</span><span class="p">[</span><span class="n">i</span><span class="p">,:,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_out</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sim loop:&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+   <span class="k">return</span> <span class="n">mcmc_sim</span></div>
+
+
+<div class="viewcode-block" id="find_errors"><a class="viewcode-back" href="../api/pyemcee.main.html#pyemcee.find_errors">[docs]</a><span class="k">def</span> <span class="nf">find_errors</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">mcmc_sim</span><span class="p">,</span> <span class="n">clevel</span><span class="p">,</span> <span class="n">do_plot</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">image_output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+   <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function returns the uncertainties of the function outputs</span>
+<span class="sd">        based on the confidence level.</span>
+
+<span class="sd">       For example::</span>
+
+<span class="sd">        &gt;&gt; output_error=pyemcee.find_erros(output, mcmc_sim, clevel)</span>
+<span class="sd">        </span>
+<span class="sd">    :return: This function returns uncertainties.</span>
+<span class="sd">    :rtype: arrays</span>
+
+<span class="sd">    :param do_plot: set to plot a normalized histogram of the MCMC chain.</span>
+<span class="sd">    :type do_plot: boolean  </span>
+<span class="sd">    </span>
+<span class="sd">    :param image_output_path: the image output path.</span>
+<span class="sd">    :type image_output_path: str                                </span>
+
+<span class="sd">    :param output: the output array returned by the calling function.</span>
+<span class="sd">    :type output: arrays  </span>
+
+<span class="sd">    :param mcmc_sim: the results of the MCMC simulations from hammer().</span>
+<span class="sd">    :type mcmc_sim: arrays  </span>
+
+<span class="sd">    :param clevel: the confidence level for the the lower and upper limits. clevel=0.38292492 (0.5-sigma); clevel=0.68268949 (1.0-sigma); clevel=0.86638560 (1.5-sigma); clevel=0.90 (1.645-sigma); clevel=0.95 (1.960-sigma); clevel=0.95449974 (2.0-sigma); clevel=0.98758067 (2.5-sigma); clevel=0.99 (2.575-sigma); clevel=0.99730020 (3.0-sigma); clevel=0.99953474 (3.5-sigma); clevel=0.99993666 (4.0-sigma); clevel=0.99999320 (4.5-sigma); clevel=0.99999943 (5.0-sigma); clevel=0.99999996 (5.5-sigma); clevel=0.999999998(6.0-sigma).</span>
+<span class="sd">    :type clevel: float  </span>
+<span class="sd">                    </span>
+<span class="sd">   &quot;&quot;&quot;</span>
+   
+<span class="c1">#    History:</span>
+<span class="c1">#        15/03/2017, A. Danehkar, IDL code written</span>
+<span class="c1">#                    Adopted from chain_hist() of sl_emcee</span>
+<span class="c1">#                    by M.A. Nowak included in isisscripts</span>
+<span class="c1">#        05/09/2020, A. Danehkar, Transferred from IDL to Python</span>
+
+   <span class="n">nbins</span> <span class="o">=</span> <span class="mf">50.</span>
+   <span class="n">output_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+   <span class="n">output_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">output_num</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="c1">#   if finite(output, infinity=True):</span>
+<span class="c1">#      return output_error</span>
+<span class="c1">#   if finite(output, nan=True):</span>
+<span class="c1">#      return output_error</span>
+   <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">output_num</span><span class="p">):</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="n">j</span><span class="p">])):</span>
+         <span class="n">output_error</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+         <span class="n">output_error</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="n">sim1</span> <span class="o">=</span> <span class="n">mcmc_sim</span><span class="p">[:,</span> <span class="p">:,</span><span class="n">j</span><span class="p">]</span>
+         <span class="n">sim1_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">sim1</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+         <span class="n">sim1_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">sim1</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+         <span class="n">x_min</span> <span class="o">=</span> <span class="n">sim1_min</span>
+         <span class="n">x_max</span> <span class="o">=</span> <span class="n">sim1_max</span>
+         <span class="k">if</span> <span class="n">x_min</span> <span class="o">!=</span> <span class="n">x_max</span><span class="p">:</span>
+            <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="o">=</span><span class="n">linear_grid</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">nbins</span><span class="p">)</span>
+            <span class="n">lo_fine</span><span class="p">,</span> <span class="n">hi_fine</span><span class="o">=</span><span class="n">linear_grid</span><span class="p">(</span><span class="n">sim1_min</span><span class="p">,</span> <span class="n">sim1_max</span><span class="p">,</span> <span class="mf">4.</span> <span class="o">*</span> <span class="n">nbins</span><span class="p">)</span>
+            <span class="n">hist</span><span class="p">,</span> <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">sim1</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">lo</span><span class="p">)</span>
+                              <span class="c1">#binsize=lo[1] - lo[0])  # BINSIZE = float(bin), locations=xbin,)</span>
+            <span class="n">hist_fine</span><span class="p">,</span> <span class="n">bin_edges_fine</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">sim1</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">lo_fine</span><span class="p">)</span>
+                              <span class="c1">#binsize=lo_fine[1] - lo_fine[0])  # BINSIZE = float(bin), locations=xbin)</span>
+            <span class="n">bin_centers</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">bin_edges</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">bin_edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">pdf_n</span>  <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">)</span>
+            <span class="n">bin_centers_fine</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">bin_edges_fine</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">bin_edges_fine</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">pdf_n_fine</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">bin_centers_fine</span><span class="p">)</span>
+            <span class="n">cdf_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">hist</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">))</span>
+            <span class="c1">#cdf_n = np.cumsum(pdf_n) / len(sim1) #nelements()</span>
+            <span class="n">cdf_n_fine</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">hist_fine</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">bin_edges_fine</span><span class="p">))</span>
+            <span class="c1">#cdf_n_fine = np.cumsum(pdf_n_fine) / len(sim1) #nelements()</span>
+
+            <span class="n">result</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+            <span class="n">clevel_start</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">cdf_n</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">clevel</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">clevel_end</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">cdf_n</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">clevel</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">clevel_start</span> <span class="o">==</span> <span class="mi">50</span><span class="p">:</span>
+               <span class="n">clevel_start</span> <span class="o">=</span> <span class="n">clevel_start</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">clevel_end</span> <span class="o">==</span> <span class="mi">50</span><span class="p">:</span>
+               <span class="n">clevel_end</span> <span class="o">=</span> <span class="n">clevel_end</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">sim1_lo</span> <span class="o">=</span> <span class="n">lo</span><span class="p">[</span><span class="n">clevel_start</span><span class="p">]</span>
+            <span class="n">sim1_hi</span> <span class="o">=</span> <span class="n">hi</span><span class="p">[</span><span class="n">clevel_end</span><span class="p">]</span>
+            <span class="c1"># print, result, sim1_lo-result, sim1_hi-result</span>
+            <span class="c1"># plothist, sim1, bin=lo[1]-lo[0]</span>
+
+            <span class="n">clevel_start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">cdf_n_fine</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">clevel</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">clevel_end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">cdf_n_fine</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">clevel</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">clevel_start</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+               <span class="n">clevel_start</span> <span class="o">=</span> <span class="n">clevel_start</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">clevel_end</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+               <span class="n">clevel_end</span> <span class="o">=</span> <span class="n">clevel_end</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">sim1_lo</span> <span class="o">=</span> <span class="n">lo_fine</span><span class="p">[</span><span class="n">clevel_start</span><span class="p">]</span>
+            <span class="n">sim1_hi</span> <span class="o">=</span> <span class="n">hi_fine</span><span class="p">[</span><span class="n">clevel_end</span><span class="p">]</span>
+            <span class="n">bin_fine</span> <span class="o">=</span> <span class="n">lo_fine</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">lo_fine</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># temp=size(pdf_n_fine,/DIMENSIONS)</span>
+            <span class="c1"># ntot=double(temp[0])</span>
+            <span class="n">output_error</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim1_lo</span> <span class="o">-</span> <span class="n">result</span>
+            <span class="n">output_error</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim1_hi</span> <span class="o">-</span> <span class="n">result</span>
+            <span class="c1"># print, result, sim1_lo-result, sim1_hi-result</span>
+            <span class="c1"># pdf_normalize=pdf_n_fine/bin_fine/ntot</span>
+            <span class="c1"># plot,lo_fine,pdf_normalize/max(pdf_normalize)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">do_plot</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+               <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+               <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sim1</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="n">lo_fine</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+               <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+               <span class="k">if</span> <span class="p">(</span><span class="n">image_output_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                  <span class="n">filename</span> <span class="o">=</span> <span class="n">image_output_path</span> <span class="o">+</span> <span class="s1">&#39;/histogram&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span>
+                  <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+                  <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sim1</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="n">lo_fine</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+                  <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+         <span class="k">else</span><span class="p">:</span>
+            <span class="n">output_error</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">output_error</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+   <span class="k">return</span> <span class="n">output_error</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Ashkbiz Danehkar
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

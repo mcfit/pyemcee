@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Usage &mdash; pyemcee 0.2.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="References" href="reference.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> pyemcee
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/pyemcee.main.html">pyemcee.main package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyemcee</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Usage</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/user/usage.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>The Documentation of the functions provides in detail in the <em>API Documentation</em> (<a class="reference external" href="https://mcfit.github.io/pyemcee/doc">mcfit.github.io/pyemcee/doc</a>). This Python library creates the MCMC sampling  for given upper and lower uncertainties, and propagates uncertainties of parameters into the function</p>
+<p>You need to define your function. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">myfunc21</span><span class="p">(</span><span class="n">input1</span><span class="p">):</span>
+   <span class="n">result1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">input1</span><span class="p">)</span>
+   <span class="n">result2</span> <span class="o">=</span> <span class="n">input1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="n">input1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+   <span class="k">return</span> <span class="p">[</span><span class="n">result1</span><span class="p">,</span> <span class="n">result2</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>and use the appropriate confidence level and uncertainty distribution. For example, for a 1.645-sigma standard deviation with a uniform distribution:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">clevel</span><span class="o">=.</span><span class="mi">9</span> <span class="c1"># 1.645-sigma</span>
+<span class="n">use_gaussian</span><span class="o">=</span><span class="mi">0</span> <span class="c1"># uniform distribution from min value to max value</span>
+</pre></div>
+</div>
+<p>for a 1-sigma standard deviation with a Gaussian distribution:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">clevel</span><span class="o">=</span><span class="mf">0.68268949</span> <span class="c1"># 1.0-sigma</span>
+<span class="n">use_gaussian</span><span class="o">=</span><span class="mi">1</span> <span class="c1"># gaussian distribution from min value to max value</span>
+</pre></div>
+</div>
+<p>and specify the number of walkers and the number of iterations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">walk_num</span><span class="o">=</span><span class="mi">30</span>
+<span class="n">iteration_num</span><span class="o">=</span><span class="mi">100</span>
+</pre></div>
+</div>
+<p>Now you provide the given upper and lower uncertainties of the input parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">input1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">])</span>
+<span class="n">input1_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+<span class="n">input1_err_p</span> <span class="o">=</span> <span class="n">input1_err</span>
+<span class="n">input1_err_m</span> <span class="o">=</span> <span class="o">-</span><span class="n">input1_err</span>
+<span class="n">output1</span> <span class="o">=</span> <span class="n">myfunc21</span><span class="p">(</span><span class="n">input1</span><span class="p">)</span>
+<span class="n">output1_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">output1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You should load the <strong>pyemcee</strong> library class as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyemcee</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+<p>You can then create the MCMC sample and propagate the uncertainties of the input parameters into your defined functions as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mcmc_sim</span> <span class="o">=</span> <span class="n">pyemcee</span><span class="o">.</span><span class="n">hammer</span><span class="p">(</span><span class="n">myfunc21</span><span class="p">,</span> <span class="n">input1</span><span class="p">,</span> <span class="n">input1_err_m</span><span class="p">,</span>
+                          <span class="n">input1_err_p</span><span class="p">,</span> <span class="n">output1</span><span class="p">,</span> <span class="n">walk_num</span><span class="p">,</span>
+                          <span class="n">iteration_num</span><span class="p">,</span> <span class="n">use_gaussian</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To determine the upper and lower errors of the function outputs, you need to run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output1_error</span> <span class="o">=</span> <span class="n">pyemcee</span><span class="o">.</span><span class="n">find_errors</span><span class="p">(</span><span class="n">output1</span><span class="p">,</span> <span class="n">mcmc_sim</span><span class="p">,</span> <span class="n">clevel</span><span class="p">,</span> <span class="n">do_plot</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>which shows the following distribution histograms:</p>
+<a class="reference internal image-reference" href="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram0.png"><img alt="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram0.png" src="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram0.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram1.png"><img alt="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram1.png" src="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram1.png" style="width: 400px;" /></a>
+<p>To print the results:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">output1_num</span><span class="p">):</span>
+   <span class="nb">print</span><span class="p">(</span><span class="n">output1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">output1_error</span><span class="p">[</span><span class="n">i</span><span class="p">,:])</span>
+</pre></div>
+</div>
+<p>which provide the upper and lower limits on each parameter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">3.0</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.35801017</span> <span class="mf">0.35998471</span><span class="p">]</span>
+<span class="mf">2.0</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.37573196</span> <span class="mf">0.36297235</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>For other standard deviation, you should use different confidence levels:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">clevel</span><span class="o">=</span><span class="mf">0.38292492</span> <span class="c1"># 0.5-sigma</span>
+<span class="n">clevel</span><span class="o">=</span><span class="mf">0.68268949</span> <span class="c1"># 1.0-sigma</span>
+<span class="n">clevel</span><span class="o">=</span><span class="mf">0.86638560</span> <span class="c1"># 1.5-sigma</span>
+<span class="n">clevel</span><span class="o">=</span><span class="mf">0.90</span>       <span class="c1"># 1.645-sigma</span>
+<span class="n">clevel</span><span class="o">=</span><span class="mf">0.95</span>       <span class="c1"># 1.960-sigma</span>
+<span class="n">clevel</span><span class="o">=</span><span class="mf">0.95449974</span> <span class="c1"># 2.0-sigma</span>
+<span class="n">clevel</span><span class="o">=</span><span class="mf">0.98758067</span> <span class="c1"># 2.5-sigma</span>
+<span class="n">clevel</span><span class="o">=</span><span class="mf">0.99</span>       <span class="c1"># 2.575-sigma</span>
+<span class="n">clevel</span><span class="o">=</span><span class="mf">0.99730020</span> <span class="c1"># 3.0-sigma</span>
+<span class="n">clevel</span><span class="o">=</span><span class="mf">0.99953474</span> <span class="c1"># 3.5-sigma</span>
+<span class="n">clevel</span><span class="o">=</span><span class="mf">0.99993666</span> <span class="c1"># 4.0-sigma</span>
+<span class="n">clevel</span><span class="o">=</span><span class="mf">0.99999320</span> <span class="c1"># 4.5-sigma</span>
+<span class="n">clevel</span><span class="o">=</span><span class="mf">0.99999943</span> <span class="c1"># 5.0-sigma</span>
+<span class="n">clevel</span><span class="o">=</span><span class="mf">0.99999996</span> <span class="c1"># 5.5-sigma</span>
+<span class="n">clevel</span><span class="o">=</span><span class="mf">0.999999998</span><span class="c1"># 6.0-sigma</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="reference.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Ashkbiz Danehkar
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
