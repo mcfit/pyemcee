@@ -158,3 +158,14 @@ Documentation
 
 For more information on how to use the API functions from the pyemcee library, please read the `API Documentation  <https://mcfit.github.io/pyemcee/doc>`_ published on `mcfit.github.io/pyemcee <https://mcfit.github.io/pyemcee>`_.
 
+
+Learn More
+==========
+
+==================  =============================================
+**Documentation**   https://pyemcee.readthedocs.io/
+**Repository**      https://github.com/mcfit/pyemcee
+**Issues & Ideas**  https://github.com/mcfit/pyemcee/issues
+**Conda-Forge**     https://anaconda.org/conda-forge/pyemcee
+**PyPI**            https://pypi.org/project/pyemcee/
+==================  =============================================
