@@ -6,8 +6,8 @@ pyemcee
     :target: https://pypi.python.org/pypi/pyemcee/
     :alt: PyPI Version
     
-.. image:: https://travis-ci.org/mcfit/pyemcee.svg?branch=master
-    :target: https://travis-ci.org/mcfit/pyemcee
+.. image:: https://travis-ci.com/mcfit/pyemcee.svg?branch=master
+    :target: https://travis-ci.com/mcfit/pyemcee
     :alt: Build Status
     
 .. image:: https://ci.appveyor.com/api/projects/status/oqnksaooj338xn4d?svg=true
