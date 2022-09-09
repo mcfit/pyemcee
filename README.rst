@@ -33,8 +33,8 @@ pyemcee
 .. image:: https://img.shields.io/badge/python-2.7%2C%203.5-blue.svg
     :alt: Support Python versions 2.7, 3.4 and 3.5
     
-.. image:: https://img.shields.io/badge/DOI-10.5281/zenodo.4495912-blue.svg
-    :target: https://doi.org/10.5281/zenodo.4495912
+.. image:: https://img.shields.io/badge/DOI-10.5281/zenodo.4495911-blue.svg
+    :target: https://doi.org/10.5281/zenodo.4495911
     :alt: Zenodo
 
 Description
@@ -172,5 +172,5 @@ Learn More
 **Issues & Ideas**  https://github.com/mcfit/pyemcee/issues
 **Conda-Forge**     https://anaconda.org/conda-forge/pyemcee
 **PyPI**            https://pypi.org/project/pyemcee/
-**Archive**         `10.5281/zenodo.4495912 <https://doi.org/10.5281/zenodo.4495912>`_
+**Archive**         `10.5281/zenodo.4495911 <https://doi.org/10.5281/zenodo.4495911>`_
 ==================  =============================================
