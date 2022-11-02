@@ -11,7 +11,7 @@ try:
 except ImportError:
       from distutils.core import setup
 
-import pyemcee
+#import pyemcee
 
 with codecs.open('README.rst', 'r', 'utf-8') as fd:
     setup(name='pyemcee',
@@ -30,4 +30,4 @@ with codecs.open('README.rst', 'r', 'utf-8') as fd:
           data_files = [("", ["LICENSE"])],
           install_requires=['numpy','scipy','matplotlib'],
          )
-
+    
