@@ -36,6 +36,9 @@ pyemcee
 .. image:: https://img.shields.io/badge/DOI-10.5281/zenodo.4495911-blue.svg
     :target: https://doi.org/10.5281/zenodo.4495911
     :alt: Zenodo
+    
+.. image:: https://mybinder.org/badge_logo.svg
+ :target: https://mybinder.org/v2/gh/mcfit/pyemcee/HEAD?labpath=Notebook.ipynb
 
 Description
 ===========
@@ -75,7 +78,15 @@ How to Use
 
 The Documentation of the functions provides in detail in the *API Documentation* (`mcfit.github.io/pyemcee/doc <https://mcfit.github.io/pyemcee/doc>`_). This Python library creates the MCMC sampling  for given upper and lower uncertainties, and propagates uncertainties of parameters into the function
 
-First, you need to load the **pyemcee** library class as follows::
+See *Jupyter Notebooks*: `Notebooks.ipynb <https://github.com/mcfit/pyemcee/blob/master/Notebook.ipynb>`_
+
+Run *Jupyter Notebooks* on `Binder <https://mybinder.org/v2/gh/mcfit/pyemcee/HEAD?labpath=Notebook.ipynb>`_:
+
+.. image:: https://mybinder.org/badge_logo.svg
+ :target: https://mybinder.org/v2/gh/mcfit/pyemcee/HEAD?labpath=Notebook.ipynb
+
+
+First, you need to load the **pyemcee** library as follows::
 
     import pyemcee
     import numpy as np
@@ -87,7 +98,7 @@ You need to define your function. For example::
        result2 = input1[1] ** input1[0]
        return [result1, result2]
 
-Then, provide the given upper and lower uncertainties of the input parameters::
+Then, specify the upper and lower uncertainties of the prior parameters::
 
     input1 = np.array([1., 2.])
     input1_err = np.array([0.2, 0.5])
@@ -96,27 +107,16 @@ Then, provide the given upper and lower uncertainties of the input parameters::
     output1 = myfunc21(input1)
     output1_num = len(output1)
 
-and use the appropriate confidence level and uncertainty distribution. For example, for a uniform distribution::
+Choose the appropriate uncertainty distribution. For example, for a uniform distribution, use_gaussian=0, and a Gaussian distribution use_gaussian=1. Then, specify the number of walkers and the number of iterations, e.g. walk_num=30 and iteration_num=100. You can then create the MCMC sample and propagate the uncertainties of the input parameters into your defined functions as follows::
 
     use_gaussian=0 # uniform distribution from min value to max value
-
-and a Gaussian distribution::
-
-    use_gaussian=1 # gaussian distribution from min value to max value
-
-and specify the number of walkers and the number of iterations, e.g. walk_num=30 and iteration_num=100.
-
-
-You can then create the MCMC sample and propagate the uncertainties of the input parameters into your defined functions as follows::
-
-    use_gaussian=0 # uniform distribution from min value to max value
-    walk_num=30
-    iteration_num=100
+    walk_num=30 # number of walkers
+    iteration_num=100 # number of samplers
     mcmc_sim = pyemcee.hammer(myfunc21, input1, input1_err_m, 
                               input1_err_p, output1, walk_num, 
                               iteration_num, use_gaussian)
 
-To determine the upper and lower errors of the function outputs, you need to run with the appropriate confidence level. For example, a 1.645-sigma standard deviation can be specified with clevel=0.90. For a 1-sigma standard deviation, we have clevel=0.682:: 
+To determine the upper and lower errors of the function outputs, you need to run with the chosen appropriate confidence level. For example, a 1.645-sigma standard deviation can be specified with clevel=0.90. For a 1-sigma standard deviation, we have clevel=0.682:: 
 
     clevel=0.68268949 # 1-sigma
     output1_error = pyemcee.find_errors(output1, mcmc_sim, clevel, do_plot=1)
@@ -129,7 +129,7 @@ which shows the following distribution histograms:
 .. image:: https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram1.png
     :width: 100
 
-To print the results::
+To prevent plotting, you should set do_plot=None. To print the results::
 
     for i in range(0, output1_num):
        print(output1[i], output1_error[i,:])
