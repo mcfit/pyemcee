@@ -1,3 +1,6 @@
+from __future__ import print_function
+#print_function for use in Python 2.7 and later
+
 # -*- coding: utf-8 -*-
 
 """
@@ -15,9 +18,6 @@ Goodman & Weare (2010).
 import numpy as np
 import scipy.stats as stats
 import matplotlib.pyplot as plt
-
-#for use in Python 2.7 and later
-from __future__ import print_function
 
 __all__ = ["hammer","find_errors"]
 
@@ -470,4 +470,3 @@ def find_errors(output, mcmc_sim, clevel, do_plot=None, image_output_path=None):
             output_error[j, 0] = 0
             output_error[j, 1] = 0
    return output_error
-
