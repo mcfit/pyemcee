@@ -15,7 +15,7 @@ except ImportError:
 
 with codecs.open('README.rst', 'r', 'utf-8') as fd:
     setup(name='pyemcee',
-          version="0.2.4",
+          version="0.2.5",
           description = 'pyemcee: Python implementation of the affine-invariant MCMC Hammer',
           long_description=fd.read(),
           author='Ashkbiz Danehkar',

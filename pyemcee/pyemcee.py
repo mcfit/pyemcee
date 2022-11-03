@@ -16,6 +16,9 @@ import numpy as np
 import scipy.stats as stats
 import matplotlib.pyplot as plt
 
+#for use in Python 2.7 and later
+from __future__ import print_function
+
 __all__ = ["hammer","find_errors"]
 
 def initialize(fcn, param, param_err_m, param_err_p, walk_num, output_num, use_gaussian, functargs=None):
