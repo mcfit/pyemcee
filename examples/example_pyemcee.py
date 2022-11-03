@@ -56,7 +56,9 @@ input1_err_m = -input1_err
 output1 = myfunc21(input1)
 output1_num = len(output1)
 
-mcmc_sim = pyemcee.hammer(myfunc21, input1, input1_err_m, input1_err_p, output1, walk_num, iteration_num, use_gaussian)
+mcmc_sim = pyemcee.hammer(myfunc21, input1, input1_err_m, input1_err_p, 
+                          output1, walk_num, iteration_num, 
+                          use_gaussian, print_progress=1)
 
 output1_error = pyemcee.find_errors(output1, mcmc_sim, clevel, do_plot=1, image_output_path=image_output_path)
 
@@ -81,8 +83,10 @@ fcnargs['scale2']=scale2
 output1 = myfunc22(input1, functargs=fcnargs)
 output1_num = len(output1)
 
-mcmc_sim = pyemcee.hammer(myfunc22, input1, input1_err_m, input1_err_p, output1, walk_num, iteration_num, use_gaussian, functargs=fcnargs)
-
+mcmc_sim = pyemcee.hammer(myfunc22, input1, input1_err_m, input1_err_p, 
+                          output1, walk_num, iteration_num, 
+                          use_gaussian, print_progress=1, functargs=fcnargs)
+                          
 output1_error = pyemcee.find_errors(output1, mcmc_sim, clevel, do_plot=1)
 
 for i in range(0, output1_num):

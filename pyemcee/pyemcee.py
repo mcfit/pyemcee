@@ -240,7 +240,9 @@ def update_walk(fcn, random_num, x_a, x_b, functargs=None):
    return x_output
 
 
-def hammer(fcn, input, input_err_m, input_err_p, output, walk_num, iteration_num, use_gaussian, functargs=None):
+def hammer(fcn, input, input_err_m, input_err_p, output, 
+           walk_num, iteration_num, use_gaussian, 
+           print_progress=None, functargs=None):
    """
         This function runs the affine-invariant MCMC Hammer,
         and returns the MCMC simulations
@@ -255,7 +257,10 @@ def hammer(fcn, input, input_err_m, input_err_p, output, walk_num, iteration_num
 
     :param functargs: the function arguments (not used for MCMC).
     :type functargs: parameter, optional
-        
+    
+    :param print_progress: print the progress percentage of the MCMC sampler.
+    :type print_progress: parameter, optional
+          
     :param fcn: the calling function name.
     :type fcn: str               
    
@@ -320,6 +325,7 @@ def hammer(fcn, input, input_err_m, input_err_p, output, walk_num, iteration_num
    x_out = np.zeros((a_num + b_num, output_num))
    mcmc_sim = np.zeros((iteration_num, a_num + b_num, output_num))
    #sim1=np.zeros(iteration_num,a_num+b_num)
+   print_progress_step=iteration_num/10
    for i in range(0, iteration_num):
    # first half of walkers
       random_num = i * a_num + np.arange(a_num)
@@ -341,7 +347,13 @@ def hammer(fcn, input, input_err_m, input_err_p, output, walk_num, iteration_num
          x_out[b_walk[j],:] = x_output[j,:]#
       for j in range(0, output_num):
          mcmc_sim[i,:,j] = x_out[:,j]
-      print('Sim loop:', i)
+      # print('Sim loop:', i)
+      if (print_progress is not None):
+         if (i % print_progress_step == 0):
+            print ('Progress: '+str(int(i/iteration_num*100))+'% \r', end='')
+   if (print_progress is not None):
+      print ('Progress: 100% \r', end='')
+      print ('\n')
    return mcmc_sim
 
 
