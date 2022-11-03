@@ -78,9 +78,9 @@ How to Use
 
 The Documentation of the functions provides in detail in the *API Documentation* (`mcfit.github.io/pyemcee/doc <https://mcfit.github.io/pyemcee/doc>`_). This Python library creates the MCMC sampling  for given upper and lower uncertainties, and propagates uncertainties of parameters into the function
 
-See *Jupyter Notebooks*: `Notebook.ipynb <https://github.com/mcfit/pyemcee/blob/master/Notebook.ipynb>`_
+See *Jupyter Notebook*: `Notebook.ipynb <https://github.com/mcfit/pyemcee/blob/master/Notebook.ipynb>`_
 
-Run *Jupyter Notebooks* on `Binder <https://mybinder.org/v2/gh/mcfit/pyemcee/HEAD?labpath=Notebook.ipynb>`_:
+Run *Jupyter Notebook* on `Binder <https://mybinder.org/v2/gh/mcfit/pyemcee/HEAD?labpath=Notebook.ipynb>`_:
 
 .. image:: https://mybinder.org/badge_logo.svg
  :target: https://mybinder.org/v2/gh/mcfit/pyemcee/HEAD?labpath=Notebook.ipynb
