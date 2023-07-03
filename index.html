@@ -18,8 +18,8 @@
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">pyemcee</h1>
-      <h2 class="project-tagline">pyemcee - Python Package for affine-invariant MCMC Hammer</h2>
+      <h2 class="project-name">pyemcee</h2>
+      <h3 class="project-tagline">pyemcee - Python Package for affine-invariant MCMC Hammer</h3>
       <a href="https://github.com/mcfit/pyemcee" class="btn">View on GitHub</a>
       <a href="https://github.com/mcfit/pyemcee/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/mcfit/pyemcee/tarball/master" class="btn">Download .tar.gz</a>
@@ -27,27 +27,28 @@
     </section>
 
     <section class="main-content">
-      <h1>
-<a id="pyemcee" class="anchor" href="#pyemcee" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pyemcee</h1>
+      <h2>
+<a id="pyemcee" class="anchor" href="#pyemcee" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pyemcee</h2>
 
 <p><strong>pyemcee</strong> - Python Package for affine-invariant MCMC Hammer</p>
 
 </div>
 <a class="reference external image-reference" href="https://pypi.python.org/pypi/pyemcee/"><img alt="PyPI Version" src="https://img.shields.io/pypi/v/pyemcee.svg?style=flat" /></a>
-<a class="reference external image-reference" href="https://travis-ci.org/mcfit/pyemcee"><img alt="Build Status" src="https://travis-ci.org/mcfit/pyemcee.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://app.travis-ci.com/github/mcfit/pyemcee"><img alt="Build Status" src="https://app.travis-ci.com/mcfit/pyemcee.svg?branch=master" /></a>
 <a class="reference external image-reference" href="https://ci.appveyor.com/project/danehkar/pyemcee"><img alt="Build Status" src="https://ci.appveyor.com/api/projects/status/oqnksaooj338xn4d?svg=true" /></a>
 <a class="reference external image-reference" href="https://coveralls.io/github/mcfit/pyemcee?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/mcfit/pyemcee/badge.svg?" /></a>
 <a class="reference external image-reference" href="https://github.com/mcfit/pyemcee/blob/master/LICENSE"><object data="https://img.shields.io/badge/license-GPL-blue.svg" type="image/svg+xml">GitHub license</object></a>
 <a class="reference external image-reference" href="https://anaconda.org/conda-forge/pyemcee"><object data="https://img.shields.io/conda/vn/conda-forge/pyemcee.svg" type="image/svg+xml">Anaconda Cloud</object></a>
-<object data="https://img.shields.io/badge/python-2.7%2C%203.4%2C%203.5-blue.svg" type="image/svg+xml">
-Support Python versions 2.7, 3.4 and 3.5</object>
-
+<a class="reference external image-reference" href="https://pyemcee.readthedocs.io/en/latest/?badge=latest"><img alt="Documentation Status" src="https://readthedocs.org/projects/pyemcee/badge/?version=latest" /></a>
+<object data="https://img.shields.io/badge/python-2.7%2C%203.5-blue.svg" type="image/svg+xml">Support Python versions 2.7, 3.4 and 3.5</object>
+<a class="reference external image-reference" href="https://doi.org/10.5281/zenodo.4495911"><object data="https://img.shields.io/badge/DOI-10.5281/zenodo.4495911-blue.svg" type="image/svg+xml">Zenodo</object></a>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mcfit/pyemcee/HEAD?labpath=Notebook.ipynb"><object data="https://mybinder.org/badge_logo.svg" type="image/svg+xml">https://mybinder.org/badge_logo.svg</object></a>
 <div class="section" id="description">
-<h1>Description</h1>
+<h2>Description</h2>
 <p><strong>pyemcee</strong> is a Python implementation of the <em>affine-invariant Markov chain Monte Carlo (MCMC) ensemble sampler</em>, based on <a class="reference external" href="https://github.com/mcfit/sl_emcee">sl_emcee</a> by <a class="reference external" href="http://space.mit.edu/home/mnowak/isis_vs_xspec/">M. A. Nowak</a>, an S-Lang/<a class="reference external" href="http://space.mit.edu/cxc/isis/">ISIS</a> implementation of the MCMC Hammer proposed by <a class="reference external" href="http://dx.doi.org/10.2140/camcos.2010.5.65">Goodman &amp; Weare (2010)</a>, and also implemented in Python (<a class="reference external" href="https://github.com/dfm/emcee">emcee</a>) by <a class="reference external" href="http://adsabs.harvard.edu/abs/2013PASP..125..306F">Foreman-Mackey et al. (2013)</a>.</p>
 </div>
 <div class="section" id="installation">
-<h1>Installation</h1>
+<h2>Installation</h2>
 <p>To install the last version, all you should need to do is</p>
 <pre class="code literal-block">
 $ python setup.py install
@@ -60,94 +61,122 @@ $ pip install pyemcee
 <pre class="code literal-block">
 $ conda install -c conda-forge pyemcee
 </pre>
+<p>This package requires the following packages:</p>
+<blockquote>
+<ul class="simple">
+<li><a class="reference external" href="https://numpy.org/">NumPy</a></li>
+<li><a class="reference external" href="https://scipy.org/scipylib/">SciPy</a></li>
+<li><a class="reference external" href="https://matplotlib.org/">Matplotlib</a></li>
+</ul>
+</blockquote>
 </div>
 <div class="section" id="how-to-use">
-<h1>How to Use</h1>
-<p>The Documentation of the functions provides in detail in the <em>API Documentation</em> (<a class="reference external" href="https://mcfit.github.io/pyemcee/doc">mcfit.github.io/pyemcee/doc</a>). This Python library creates the MCMC sampling  for given upper and lower uncertainties, and propagates uncertainties of parameters into the function</p>
+<h2>How to Use</h2>
+<p>The Documentation of the functions provides in detail in the <em>API Documentation</em> (<a class="reference external" href="https://mcfit.github.io/pyemcee/doc">mcfit.github.io/pyemcee/doc</a>). This Python library creates the MCMC sampling  for given upper and lower uncertainties, and propagates uncertainties of parameters into the function.</p>
+<p>See <em>Jupyter Notebook</em>: <a class="reference external" href="https://github.com/mcfit/pyemcee/blob/master/Notebook.ipynb">Notebook.ipynb</a></p>
+<p>Run <em>Jupyter Notebook</em> on <a class="reference external" href="https://mybinder.org/v2/gh/mcfit/pyemcee/HEAD?labpath=Notebook.ipynb">Binder</a>:</p>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/mcfit/pyemcee/HEAD?labpath=Notebook.ipynb"><object data="https://mybinder.org/badge_logo.svg" type="image/svg+xml">https://mybinder.org/badge_logo.svg</object></a>
+<p>First, you need to load the <strong>pyemcee</strong> library as follows:</p>
+<pre class="code python literal-block">
+<span class="keyword namespace">import</span> <span class="name namespace">pyemcee</span><span class="whitespace">
+</span><span class="keyword namespace">import</span> <span class="name namespace">numpy</span> <span class="keyword">as</span> <span class="name namespace">np</span>
+</pre>
 <p>You need to define your function. For example:</p>
-<pre class="literal-block">
-def myfunc21(input1):
-   result1 = np.sum(input1)
-   result2 = input1[1] ** input1[0]
-   return [result1, result2]
+<pre class="code python literal-block">
+<span class="keyword">def</span> <span class="name function">myfunc21</span><span class="punctuation">(</span><span class="name">input1</span><span class="punctuation">):</span><span class="whitespace">
+</span>   <span class="name">result1</span> <span class="operator">=</span> <span class="name">np</span><span class="operator">.</span><span class="name">sum</span><span class="punctuation">(</span><span class="name">input1</span><span class="punctuation">)</span><span class="whitespace">
+</span>   <span class="name">result2</span> <span class="operator">=</span> <span class="name">input1</span><span class="punctuation">[</span><span class="literal number integer">1</span><span class="punctuation">]</span> <span class="operator">**</span> <span class="name">input1</span><span class="punctuation">[</span><span class="literal number integer">0</span><span class="punctuation">]</span><span class="whitespace">
+</span>   <span class="keyword">return</span> <span class="punctuation">[</span><span class="name">result1</span><span class="punctuation">,</span> <span class="name">result2</span><span class="punctuation">]</span>
 </pre>
-<p>and use the appropriate confidence level and uncertainty distribution. For example, for a 1.645-sigma standard deviation with a uniform distribution:</p>
-<pre class="literal-block">
-clevel=.9 # 1.645-sigma
-use_gaussian=0 # uniform distribution from min value to max value
+<p>Then, specify the upper and lower uncertainties of the prior parameters:</p>
+<pre class="code python literal-block">
+<span class="name">input1</span> <span class="operator">=</span> <span class="name">np</span><span class="operator">.</span><span class="name">array</span><span class="punctuation">([</span><span class="literal number float">1.</span><span class="punctuation">,</span> <span class="literal number float">2.</span><span class="punctuation">])</span><span class="whitespace">
+</span><span class="name">input1_err</span> <span class="operator">=</span> <span class="name">np</span><span class="operator">.</span><span class="name">array</span><span class="punctuation">([</span><span class="literal number float">0.2</span><span class="punctuation">,</span> <span class="literal number float">0.5</span><span class="punctuation">])</span><span class="whitespace">
+</span><span class="name">input1_err_p</span> <span class="operator">=</span> <span class="name">input1_err</span><span class="whitespace">
+</span><span class="name">input1_err_m</span> <span class="operator">=</span> <span class="operator">-</span><span class="name">input1_err</span><span class="whitespace">
+</span><span class="name">output1</span> <span class="operator">=</span> <span class="name">myfunc21</span><span class="punctuation">(</span><span class="name">input1</span><span class="punctuation">)</span><span class="whitespace">
+</span><span class="name">output1_num</span> <span class="operator">=</span> <span class="name builtin">len</span><span class="punctuation">(</span><span class="name">output1</span><span class="punctuation">)</span>
 </pre>
-<p>for a 1-sigma standard deviation with a Gaussian distribution:</p>
-<pre class="literal-block">
-clevel=0.68268949 # 1.0-sigma
-use_gaussian=1 # gaussian distribution from min value to max value
+<p>Choose the appropriate uncertainty distribution. For example, for a uniform distribution, use_gaussian=0, and a Gaussian distribution use_gaussian=1. Then, specify the number of walkers and the number of iterations, e.g. walk_num=30 and iteration_num=100. You can then create the MCMC sample and propagate the uncertainties of the input parameters into your defined functions as follows:</p>
+<pre class="code python literal-block">
+<span class="name">use_gaussian</span><span class="operator">=</span><span class="literal number integer">0</span> <span class="comment single"># uniform distribution from min value to max value</span><span class="whitespace">
+</span><span class="name">walk_num</span><span class="operator">=</span><span class="literal number integer">30</span> <span class="comment single"># number of walkers</span><span class="whitespace">
+</span><span class="name">iteration_num</span><span class="operator">=</span><span class="literal number integer">100</span> <span class="comment single"># number of samplers</span><span class="whitespace">
+</span><span class="name">mcmc_sim</span> <span class="operator">=</span> <span class="name">pyemcee</span><span class="operator">.</span><span class="name">hammer</span><span class="punctuation">(</span><span class="name">myfunc21</span><span class="punctuation">,</span> <span class="name">input1</span><span class="punctuation">,</span> <span class="name">input1_err_m</span><span class="punctuation">,</span><span class="whitespace">
+</span>                          <span class="name">input1_err_p</span><span class="punctuation">,</span> <span class="name">output1</span><span class="punctuation">,</span> <span class="name">walk_num</span><span class="punctuation">,</span><span class="whitespace">
+</span>                          <span class="name">iteration_num</span><span class="punctuation">,</span> <span class="name">use_gaussian</span><span class="punctuation">)</span>
 </pre>
-<p>and specify the number of walkers and the number of iterations:</p>
-<pre class="literal-block">
-walk_num=30
-iteration_num=100
-</pre>
-<p>Now you provide the given upper and lower uncertainties of the input parameters:</p>
-<pre class="literal-block">
-input1 = np.array([1., 2.])
-input1_err = np.array([0.2, 0.5])
-input1_err_p = input1_err
-input1_err_m = -input1_err
-output1 = myfunc21(input1)
-output1_num = len(output1)
-</pre>
-<p>You should load the <strong>pyemcee</strong> library class as follows:</p>
-<pre class="literal-block">
-import pyemcee
-import numpy as np
-</pre>
-<p>You can then create the MCMC sample and propagate the uncertainties of the input parameters into your defined functions as follows:</p>
-<pre class="literal-block">
-mcmc_sim = pyemcee.hammer(myfunc21, input1, input1_err_m,
-                          input1_err_p, output1, walk_num,
-                          iteration_num, use_gaussian)
-</pre>
-<p>To determine the upper and lower errors of the function outputs, you need to run:</p>
-<pre class="literal-block">
-output1_error = pyemcee.find_errors(output1, mcmc_sim, clevel, do_plot=1)
+<p>To determine the upper and lower errors of the function outputs, you need to run with the chosen appropriate confidence level. For example, a 1.645-sigma standard deviation can be specified with clevel=0.90. For a 1-sigma standard deviation, we have clevel=0.682:</p>
+<pre class="code python literal-block">
+<span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.68268949</span> <span class="comment single"># 1-sigma</span><span class="whitespace">
+</span><span class="name">output1_error</span> <span class="operator">=</span> <span class="name">pyemcee</span><span class="operator">.</span><span class="name">find_errors</span><span class="punctuation">(</span><span class="name">output1</span><span class="punctuation">,</span> <span class="name">mcmc_sim</span><span class="punctuation">,</span> <span class="name">clevel</span><span class="punctuation">,</span> <span class="name">do_plot</span><span class="operator">=</span><span class="literal number integer">1</span><span class="punctuation">)</span>
 </pre>
 <p>which shows the following distribution histograms:</p>
-<img alt="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram0.png" src="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram0.png" style="width: 400px;" />
-<img alt="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram1.png" src="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram1.png" style="width: 400px;" />
-<p>To print the results:</p>
-<pre class="literal-block">
-for i in range(0, output1_num):
-   print(output1[i], output1_error[i,:])
+<img alt="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram0.png" src="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram0.png" style="width: 100px;" />
+<img alt="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram1.png" src="https://raw.githubusercontent.com/mcfit/pyemcee/master/examples/images/histogram1.png" style="width: 100px;" />
+<p>To prevent plotting, you should set do_plot=None. To print the results:</p>
+<pre class="code python literal-block">
+<span class="keyword">for</span> <span class="name">i</span> <span class="operator word">in</span> <span class="name builtin">range</span><span class="punctuation">(</span><span class="literal number integer">0</span><span class="punctuation">,</span> <span class="name">output1_num</span><span class="punctuation">):</span><span class="whitespace">
+</span>   <span class="name builtin">print</span><span class="punctuation">(</span><span class="name">output1</span><span class="punctuation">[</span><span class="name">i</span><span class="punctuation">],</span> <span class="name">output1_error</span><span class="punctuation">[</span><span class="name">i</span><span class="punctuation">,:])</span>
 </pre>
 <p>which provide the upper and lower limits on each parameter:</p>
-<pre class="literal-block">
+<pre class="code literal-block">
 3.0 [-0.35801017 0.35998471]
 2.0 [-0.37573196 0.36297235]
 </pre>
 <p>For other standard deviation, you should use different confidence levels:</p>
-<pre class="literal-block">
-clevel=0.38292492 # 0.5-sigma
-clevel=0.68268949 # 1.0-sigma
-clevel=0.86638560 # 1.5-sigma
-clevel=0.90       # 1.645-sigma
-clevel=0.95       # 1.960-sigma
-clevel=0.95449974 # 2.0-sigma
-clevel=0.98758067 # 2.5-sigma
-clevel=0.99       # 2.575-sigma
-clevel=0.99730020 # 3.0-sigma
-clevel=0.99953474 # 3.5-sigma
-clevel=0.99993666 # 4.0-sigma
-clevel=0.99999320 # 4.5-sigma
-clevel=0.99999943 # 5.0-sigma
-clevel=0.99999996 # 5.5-sigma
-clevel=0.999999998# 6.0-sigma
+<pre class="code python literal-block">
+<span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.38292492</span> <span class="comment single"># 0.5-sigma</span><span class="whitespace">
+</span><span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.68268949</span> <span class="comment single"># 1.0-sigma</span><span class="whitespace">
+</span><span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.86638560</span> <span class="comment single"># 1.5-sigma</span><span class="whitespace">
+</span><span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.90</span>       <span class="comment single"># 1.645-sigma</span><span class="whitespace">
+</span><span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.95</span>       <span class="comment single"># 1.960-sigma</span><span class="whitespace">
+</span><span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.95449974</span> <span class="comment single"># 2.0-sigma</span><span class="whitespace">
+</span><span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.98758067</span> <span class="comment single"># 2.5-sigma</span><span class="whitespace">
+</span><span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.99</span>       <span class="comment single"># 2.575-sigma</span><span class="whitespace">
+</span><span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.99730020</span> <span class="comment single"># 3.0-sigma</span><span class="whitespace">
+</span><span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.99953474</span> <span class="comment single"># 3.5-sigma</span><span class="whitespace">
+</span><span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.99993666</span> <span class="comment single"># 4.0-sigma</span><span class="whitespace">
+</span><span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.99999320</span> <span class="comment single"># 4.5-sigma</span><span class="whitespace">
+</span><span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.99999943</span> <span class="comment single"># 5.0-sigma</span><span class="whitespace">
+</span><span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.99999996</span> <span class="comment single"># 5.5-sigma</span><span class="whitespace">
+</span><span class="name">clevel</span><span class="operator">=</span><span class="literal number float">0.999999998</span><span class="comment single"># 6.0-sigma</span>
 </pre>
 </div>
 <div class="section" id="documentation">
-<h1>Documentation</h1>
+<h2>Documentation</h2>
 <p>For more information on how to use the API functions from the pyemcee library, please read the <a class="reference external" href="https://mcfit.github.io/pyemcee/doc">API Documentation</a> published on <a class="reference external" href="https://mcfit.github.io/pyemcee">mcfit.github.io/pyemcee</a>.</p>
 </div>
+<div class="section" id="learn-more">
+<h2>Learn More</h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="79%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><strong>Documentation</strong></td>
+<td><a class="reference external" href="https://pyemcee.readthedocs.io/">https://pyemcee.readthedocs.io/</a></td>
+</tr>
+<tr><td><strong>Repository</strong></td>
+<td><a class="reference external" href="https://github.com/mcfit/pyemcee">https://github.com/mcfit/pyemcee</a></td>
+</tr>
+<tr><td><strong>Issues &amp; Ideas</strong></td>
+<td><a class="reference external" href="https://github.com/mcfit/pyemcee/issues">https://github.com/mcfit/pyemcee/issues</a></td>
+</tr>
+<tr><td><strong>Conda-Forge</strong></td>
+<td><a class="reference external" href="https://anaconda.org/conda-forge/pyemcee">https://anaconda.org/conda-forge/pyemcee</a></td>
+</tr>
+<tr><td><strong>PyPI</strong></td>
+<td><a class="reference external" href="https://pypi.org/project/pyemcee/">https://pypi.org/project/pyemcee/</a></td>
+</tr>
+<tr><td><strong>Archive</strong></td>
+<td><a class="reference external" href="https://doi.org/10.5281/zenodo.4495911">10.5281/zenodo.4495911</a></td>
+</tr>
+</tbody>
+</table>
 </div>
-
+</div>
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/mcfit/pyemcee">pyemcee</a> is maintained by <a href="https://github.com/danehkar">Ashkbiz Danehkar</a>.</span>
 
